@@ -2,11 +2,7 @@
 
 ## USA States
 
-Data taken from [covidtracking](https://covidtracking.com/), mostly
-because it included the number of tests performed on each state. Quality
-varies, see website for details. 
-
-Here is an animation showing the raw data. 
+Here is an animation showing the evolution of covid19 in the USA (by state).
 ![Animation of US data by state from covidtracking. Last update: 2020-04-07](figures/covidtracking_states_eda1_zoom.gif)
 Each point represents a state, the circle sizes are by the [estimated
 population in
@@ -14,7 +10,10 @@ population in
 and the colors are by the total number of reported deaths (from white to
 dark red). Notice we are using log-scales and total positives start
 from 100. Some island states were not included because I lacked the
-population data.
+population data. Data taken from
+[covidtracking](https://covidtracking.com/), mostly because it included
+the number of tests performed on each state. Quality varies, see website
+for details.
 
 In the document [USA_STATE_RATES.md](USA_STATE_RATES.md) I describe
 using Gaussian Processes to infer the growth-rate of these variables

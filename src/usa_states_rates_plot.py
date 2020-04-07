@@ -124,7 +124,25 @@ def make_fig2(states):
 figsaveandclose(fig=make_fig1(dates[-1]), output="../figures/covidtracking_states_rates_latest.png")
 figs2gif(dates, make_fig1, '../figures/covidtracking_states_rates.gif', 60, positives_low_min=100)
 
-fig = make_fig2(['CA', 'NY', 'FL', 'TX', 'OH'])
-plt.show()
+#fig = make_fig2(['CA', 'NY', 'FL', 'TX', 'OH'])
+#plt.show()
 
+sets = [['CA', 'TX', 'FL', 'NY', 'PA'],
+        ['IL', 'OH', 'GA', 'NC', 'MI'],
+        ['NJ', 'VA', 'WA', 'AZ', 'MA'],
+        ['TN', 'IN', 'MO', 'MD', 'WI'],
+        ['CO', 'MN', 'SC', 'AL', 'LA'],
+        ['KY', 'OR', 'OK', 'CT', 'UT'],
+        ['IA', 'NV', 'AR', 'MS', 'KS'],
+        ['NM', 'NE', 'WV', 'ID', 'HI'],
+        ['NH', 'ME', 'MT', 'RI', 'DE'],
+        ['SD', 'ND', 'AK', 'DC', 'VT', 'WY'],
+        ['AS', 'GU', 'MP', 'PR', 'VI']]
+
+#fig = make_fig2(sets[10])
+#plt.show()
+
+for (i, set) in enumerate(sets):
+    figsaveandclose(fig=make_fig2(set), output="../figures/covidtracking_states_rates_byset_{}.png".format(i))
+    
 
