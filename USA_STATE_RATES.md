@@ -13,9 +13,10 @@ be underestimated.
 
 * Overall we can appreciate a reduction in the posive cases growth-rate,
 most likely as a result of the measures taken. 
-* Are the total tests gr-rates positives gr-rates correlated? It appears
-  so in some cases. But how is testing decided and how they is
-  reported/collected?  Likely delays in reporting or collection.
+* Are the total tests gr-rates and the positives gr-rates correlated? It
+  appears so in some cases. But how is testing decided and how they is
+  reported/collected? Also should account for likely delays in reporting
+  or collection.
 * Death rates seem to decrease or remain relatively flat. Hard to say if
   "sharp" transitions observed are due to low numbers (just random), or
   details on how the data was reported/collected. We should wait for a
