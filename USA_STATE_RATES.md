@@ -4,11 +4,10 @@ As the number of infected people should follow some king of exponential
 function, I used the
 [fitderiv](http://swainlab.bio.ed.ac.uk/software/fitderiv/) package for
 inferring the derivative of the log of the data (growth-rate). I also
-present the result from inferring the growth-rate for the total number
-of test and deaths, although it unclear a priory whether we should
-expect these should follow an exponential function (perhaps
-deaths?). NOTE: errors on the posteriors are likely to be
-underestimated.
+present infer the growth-rate for the total number of test and deaths,
+although I have no reason to expect them to follow an exponential
+function (perhaps deaths?). NOTE: errors on the posteriors are likely to
+be underestimated.
 
 ## Results
 
