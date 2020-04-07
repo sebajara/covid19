@@ -1,4 +1,4 @@
-## Methods
+## Approach
 
 As the number of infected people should follow some king of exponential
 function, I used the
@@ -9,9 +9,8 @@ although I have no reason to expect them to follow an exponential
 function (perhaps deaths?). NOTE: errors on the posteriors are likely to
 be underestimated.
 
-## Results
+## Preliminary analysis
 
-Preliminary analysis:
 * Overall we can appreciate a reduction in the posive cases growth-rate,
 most likely as a result of the measures taken. 
 * Some states appear to vary on the quality of their reporting or data
