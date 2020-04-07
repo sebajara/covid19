@@ -30,27 +30,27 @@ For more details we plot the trajectory of the variables and the
 estimated growth-rates. States are clustered within similar total
 population range.
 
-California, Texas, Florida, New York, Pennsylvania
+**California, Texas, Florida, New York, & Pennsylvania**
 ![Set 0. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates_byset_0.png)
-Illinois, Ohio, Georgia, North Carolina, Michigan
+**Illinois, Ohio, Georgia, North Carolina, & Michigan**
 ![Set 1. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates_byset_1.png)
-New Jersey, Virginia, Washington, Arizona, Massachusetts
+**New Jersey, Virginia, Washington, Arizona, & Massachusetts**
 ![Set 2. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates_byset_2.png)
-Tennessee, Indiana, Missouri, Maryland, Wisconsin
+**Tennessee, Indiana, Missouri, Maryland, Wisconsin**
 ![Set 3. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates_byset_3.png)
-Colorado, Minnesota, South Carolina, Alabama, Louisiana
+**Colorado, Minnesota, South Carolina, Alabama, & Louisiana**
 ![Set 4. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates_byset_4.png)
-Kentucky, Oregon, Oklahoma, Connecticut, Utah
+**Kentucky, Oregon, Oklahoma, Connecticut, & Utah**
 ![Set 5. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates_byset_5.png)
-Iowa, Nevada, Arkansas, Mississippi, Kansas
+**Iowa, Nevada, Arkansas, Mississippi, & Kansas**
 ![Set 6. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates_byset_6.png)
-New Mexico, Nebraska, West Virginia, Idaho, Hawaii
+**New Mexico, Nebraska, West Virginia, Idaho, & Hawaii**
 ![Set 7. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates_byset_7.png)
-New Hampshire, Maine, Montana, Rhode Island, Delaware
+**New Hampshire, Maine, Montana, Rhode Island, & Delaware**
 ![Set 8. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates_byset_8.png)
-South Dakota, North Dakota, Alaska, District of Columbia, Vermont, Wyoming
+**South Dakota, North Dakota, Alaska, District of Columbia, Vermont, & Wyoming**
 ![Set 9. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates_byset_9.png)
-American Samoa, Guam, Northern Mariana Islands, Puerto Rico, Virgin Islands
+**American Samoa, Guam, Northern Mariana Islands, Puerto Rico, & Virgin Islands**
 ![Set 10. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates_byset_10.png)
 
 ## Directions and TODOs
