@@ -6,8 +6,14 @@ Data taken from [covidtracking](https://covidtracking.com/), mostly
 because it included the number of tests performed on each state. Quality
 varies, see website for details. 
 
+Here is a plot showing the raw data. 
 ![Animation of US data by state from covidtracking. Last update: 2020-04-07](figures/covidtracking_states_eda1_zoom.gif)
-
+Each point represents a state, the sizes are by the [estimated
+population in
+2019](https://www2.census.gov/programs-surveys/popest/datasets/2010-2019/state/detail/)
+and the color is by the total number of reported deaths. Notice we are
+using log-scales and total positives start from 100. Some island states
+were not included because I lacked the population data.
 
 ## Data sources on Covid19
 * Covid19 data by country compiled by the European Centre for Disease Prevention and Control [ecdc-covid-19-cases-worldwide](https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases)
