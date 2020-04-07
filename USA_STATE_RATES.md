@@ -6,17 +6,20 @@ function, I used the
 inferring the derivative of the log of the data (growth-rate). I also
 present infer the growth-rate for the total number of test and deaths,
 although I have no reason to expect them to follow an exponential
-function (perhaps deaths?). NOTE: errors on the posteriors are likely to
+function (perhaps deaths?). NOTE: errors on the log-rates are likely to
 be underestimated.
 
 ## Preliminary analysis
 
 * Overall we can appreciate a reduction in the posive cases growth-rate,
 most likely as a result of the measures taken. 
-* Some states appear to vary on the quality of their reporting or data
-  gathering efforts. How to correct for it?
-* The dynamics on the number of tests seems highly arbitrary (other than
-  a loose correlation with number of cases). 
+* Are the total tests gr-rates positives gr-rates correlated? It appears
+  so in some cases. Need to account for possible delays in the reporing
+  or data collection.
+* Death rates seem to decrease or remain relatively flat. Hard to say if
+  "sharp" transitions observed are due to low numbers (just random), or
+  details on how the data was reported/collected. We should wait for a
+  few more weeks.
 
 It is easy to see how overall rates begin to decrease from the second
 half of March. Animation:
