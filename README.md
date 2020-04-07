@@ -6,14 +6,19 @@ Data taken from [covidtracking](https://covidtracking.com/), mostly
 because it included the number of tests performed on each state. Quality
 varies, see website for details. 
 
-Here is a plot showing the raw data. 
+Here is an animation showing the raw data. 
 ![Animation of US data by state from covidtracking. Last update: 2020-04-07](figures/covidtracking_states_eda1_zoom.gif)
-Each point represents a state, the sizes are by the [estimated
+Each point represents a state, the circle sizes are by the [estimated
 population in
-2019](https://www2.census.gov/programs-surveys/popest/datasets/2010-2019/state/detail/)
-and the color is by the total number of reported deaths. Notice we are
-using log-scales and total positives start from 100. Some island states
-were not included because I lacked the population data.
+2019](https://www2.census.gov/programs-surveys/popest/datasets/2010-2019/state/detail/),
+and the colors are by the total number of reported deaths (from white to
+dark red). Notice we are using log-scales and total positives start
+from 100. Some island states were not included because I lacked the
+population data.
+
+In the document [USA_STATE_RATES.md](USA_STATE_RATES.md) I describe
+using Gaussian Processes to infer the growth-rate of these variables
+with time.
 
 ## Data sources on Covid19
 * Covid19 data by country compiled by the European Centre for Disease Prevention and Control [ecdc-covid-19-cases-worldwide](https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases)
