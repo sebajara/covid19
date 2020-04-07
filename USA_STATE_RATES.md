@@ -9,14 +9,7 @@ of test and deaths. It is less clear a priory whether these should
 follow an exponential function. NOTE: errors apear to be highly
 underestimated given the default parameters used.
 
-Animation:
-![Animation. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates.gif)
-Each point represents a state, the circle sizes are by the [estimated
-population in
-2019](https://www2.census.gov/programs-surveys/popest/datasets/2010-2019/state/detail/),
-and the colors are by the total number of reported deaths (from white to
-dark red). Some island states were not included because I lacked the
-population data. Also NaN values were set to 0 just for visualization.
+## Results
 
 Preliminary analysis:
 * Overall we can appreciate a reduction in the posive cases growth-rate,
@@ -25,6 +18,17 @@ most likely as a result of the measures taken.
   gathering efforts. How to correct for it?
 * The dynamics on the number of tests seems highly arbitrary (other than
   a loose correlation with number of cases). 
+
+It is easy to see how overall rates begin to decrease by the
+end of March. Animation:
+![Animation. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates.gif)
+Each point represents a state, and the colors are by the total number of
+reported deaths (from white to dark red). For plotting NaN values were
+set to 0 just for visualization. For more details see plots below. 
+
+Here I plot the trajectory of the variables and the estimated
+growth-rates. States are clustered within similar total population
+range.
 
 
 
