@@ -1,5 +1,12 @@
 # Overview
 
+## USA States
+
+Data taken from [covidtracking](https://covidtracking.com/), mostly
+because it included the number of tests performed on each state. Quality
+varies, see website for details. 
+
+![Animation of US data by state from covidtracking. Last update: 2020-04-07](figures/covidtracking_states_eda1_zoom.gif)
 
 
 ## Data sources on Covid19
