@@ -35,10 +35,11 @@ population range.
 
 **California, Texas, Florida, New York, & Pennsylvania**
 ![Set 0. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates_byset_0.png)
+
 <details><summary>Click to expand and see similar plots for the rest of the states</summary>
 <p>
 
-
+	
 	<b>Illinois, Ohio, Georgia, North Carolina, & Michigan</b>
 	<img src="figures/covidtracking_states_rates_byset_1.png" alt="">
 
