@@ -76,12 +76,12 @@ def get_list_colors(cmapstr, N):
 
 def make_fig2(states):
     fig, axes = plt.subplots(ncols=3, nrows=2, figsize=(11.5, 6.5))
-    local_axes_formatting(axes[0, 0], "Days since 2020-03-06", "Total tests", xlim2=35, ylim2=1e06, xlim1=0, ylim1=1, fs=12, logx=False)
-    local_axes_formatting(axes[0, 1], "Days since 2020-03-06", "Total Positives", xlim2=35, ylim2=1e06, xlim1=0, ylim1=1, fs=12, logx=False)
-    local_axes_formatting(axes[0, 2], "Days since 2020-03-06", "Total Deaths", xlim2=35, ylim2=1e04, xlim1=0, ylim1=1, fs=12, logx=False)
-    local_axes_formatting(axes[1, 0], "Days since 2020-03-06", "Tests gr-rate [%/day]", xlim2=35, ylim2=100, xlim1=0, ylim1=0, fs=12, logx=False, logy=False)
-    local_axes_formatting(axes[1, 1], "Days since 2020-03-06", "Positives gr-rate [%/day]", xlim2=35, ylim2=100, xlim1=0, ylim1=0, fs=12, logx=False, logy=False)
-    local_axes_formatting(axes[1, 2], "Days since 2020-03-06", "Deaths gr-rate [%/day]", xlim2=35, ylim2=100, xlim1=0, ylim1=0, fs=12, logx=False, logy=False)
+    local_axes_formatting(axes[0, 0], "Days since 2020-03-06", "Total tests", xlim2=40, ylim2=1e06, xlim1=0, ylim1=1, fs=12, logx=False)
+    local_axes_formatting(axes[0, 1], "Days since 2020-03-06", "Total Positives", xlim2=40, ylim2=1e06, xlim1=0, ylim1=1, fs=12, logx=False)
+    local_axes_formatting(axes[0, 2], "Days since 2020-03-06", "Total Deaths", xlim2=40, ylim2=1e04, xlim1=0, ylim1=1, fs=12, logx=False)
+    local_axes_formatting(axes[1, 0], "Days since 2020-03-06", "Tests gr-rate [%/day]", xlim2=40, ylim2=100, xlim1=0, ylim1=0, fs=12, logx=False, logy=False)
+    local_axes_formatting(axes[1, 1], "Days since 2020-03-06", "Positives gr-rate [%/day]", xlim2=40, ylim2=100, xlim1=0, ylim1=0, fs=12, logx=False, logy=False)
+    local_axes_formatting(axes[1, 2], "Days since 2020-03-06", "Deaths gr-rate [%/day]", xlim2=40, ylim2=100, xlim1=0, ylim1=0, fs=12, logx=False, logy=False)
     sizes = 5#get_point_sizes(population.copy(), max_pop)
     min_date = states_df_rates['date'].min()
     #colors = plt.cm.get_cmap('jet', len(states))
