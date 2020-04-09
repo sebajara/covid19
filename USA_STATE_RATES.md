@@ -26,10 +26,15 @@ most likely as a result of the measures taken.
 
 It is easy to see how overall rates begin to decrease from the second
 half of March. Animation:
+<details>
+	<summary><b>Click to see the animation</b></summary>
+	<p>
 ![Animation. Infering time rates from US covidtracking data.](figures/covidtracking_states_rates.gif)
 Each point represents a state, and the colors are by the total number of
 reported deaths (from white to dark red). For plotting NaN values were
 set to 0 just for visualization. 
+
+</p></details>
 
 For more details we plot the trajectory of the variables and the
 estimated growth-rates. States are clustered within similar total
