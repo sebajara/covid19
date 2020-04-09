@@ -39,8 +39,9 @@ population range.
 <p>
 
 
-	**Illinois, Ohio, Georgia, North Carolina, & Michigan**
-	![Set 1. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates_byset_1.png)
+	<b>Illinois, Ohio, Georgia, North Carolina, & Michigan</b>
+	<img src="figures/covidtracking_states_rates_byset_1.png" alt="">
+
 	**New Jersey, Virginia, Washington, Arizona, & Massachusetts**
 	![Set 2. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates_byset_2.png)
 	**Tennessee, Indiana, Missouri, Maryland, Wisconsin**
