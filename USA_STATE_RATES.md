@@ -29,6 +29,7 @@ half of March. Animation:
 <details>
 	<summary><b>Click to see the animation</b></summary>
 	<p>
+
 ![Animation. Infering time rates from US covidtracking data.](figures/covidtracking_states_rates.gif)
 Each point represents a state, and the colors are by the total number of
 reported deaths (from white to dark red). For plotting NaN values were
