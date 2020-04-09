@@ -1,3 +1,11 @@
+## TOC
+
+* [Approach](#Approach)
+* [Preliminary analysis](#preliminary-analysis)
+  * [Growth-rates with respect to time](#growth-rates-with-respect-to-time)
+  * [Relative rates: positives/tests & deaths/positives](#relative-rates-positivestests--deathspositives)
+* [Directions and TODOs](#directions-and-todos)
+
 ## Approach
 
 As the number of infected people should follow some king of exponential
