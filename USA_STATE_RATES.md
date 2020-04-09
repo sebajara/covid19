@@ -38,12 +38,12 @@ population range.
 **California, Texas, Florida, New York, & Pennsylvania**
 ![Set 0. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates_byset_0.png)
 
-	<details>
-		<summary>Click to expand and see similar plots for the rest of the states</summary>
-		<p>
+<details>
+	<summary>Click to expand and see similar plots for the rest of the states</summary>
+	<p>
 
-<b>Illinois, Ohio, Georgia, North Carolina, & Michigan</b>
-<img src="figures/covidtracking_states_rates_byset_1.png" alt="">
+	<b>Illinois, Ohio, Georgia, North Carolina, & Michigan</b>
+	<img src="figures/covidtracking_states_rates_byset_1.png" alt="">
 
 **New Jersey, Virginia, Washington, Arizona, & Massachusetts**
 ![Set 2. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates_byset_2.png)
@@ -63,7 +63,6 @@ population range.
 ![Set 9. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates_byset_9.png)
 **American Samoa, Guam, Northern Mariana Islands, Puerto Rico, & Virgin Islands**
 ![Set 10. Infering rates from US covidtracking data. Last update: 2020-04-07](figures/covidtracking_states_rates_byset_10.png)
-
 
 </p></details>
 
