@@ -108,10 +108,10 @@ def make_fig3(date, positives_low_min=1):
     local_axes_formatting(axes[1, 0], "Population", "Positives [%/day]", xlim2=1e08, ylim2=100, xlim1=5e05, ylim1=0, logy=False, fs=12)
     # gr_total_test v/s positives_rate
     axes[1, 1].scatter(total_test, gr_total_test, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[1, 1], "Total Tests", "Positives/Tests [%]", xlim1=positives_low_min, xlim2=1e06, ylim1=0, ylim2=125, logy=False, logx=True, fs=12)
+    local_axes_formatting(axes[1, 1], "Total Tests", "Positives-rate / Tests-rate [%]", xlim1=positives_low_min, xlim2=1e06, ylim1=0, ylim2=125, logy=False, logx=True, fs=12)
     # gr_deaths v/s positives_rate
     axes[1, 2].scatter(positives, gr_deaths, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[1, 2], "Total Positives", "Deaths/Positives [%]", xlim1=positives_low_min, xlim2=5e05, ylim1=0, ylim2=61, logy=False, logx=True, fs=12)
+    local_axes_formatting(axes[1, 2], "Total Positives", "Deaths-rate / Positives-rate [%]", xlim1=positives_low_min, xlim2=5e05, ylim1=0, ylim2=61, logy=False, logx=True, fs=12)
     plt.tight_layout()
     # Add the labels for the top states. Note: it is better to add
     # labels after plt.tight_layout()
@@ -178,8 +178,8 @@ def make_fig4(states):
     local_axes_formatting(axes[0, 1], "Days since 2020-03-06", "Total tests", xlim1=0, xlim2=dayspan+1, ylim1=1, ylim2=1e06, fs=12, logx=False)
     local_axes_formatting(axes[0, 2], "Days since 2020-03-06", "Total Deaths", xlim2=dayspan+1, ylim2=max_death, xlim1=0, ylim1=1, fs=12, logx=False)
     local_axes_formatting(axes[1, 0], "Days since 2020-03-06", "Positives [%/day]", xlim2=dayspan+1, ylim2=100, xlim1=0, ylim1=0, fs=12, logx=False, logy=False)
-    local_axes_formatting(axes[1, 1], "Days since 2020-03-06", "Positives / Tests [%]", xlim2=dayspan+1, ylim2=250, xlim1=0, ylim1=0, fs=12, logx=False, logy=False)
-    local_axes_formatting(axes[1, 2], "Days since 2020-03-06", "Deaths / Positives [%]", xlim2=dayspan+1, ylim2=60, xlim1=0, ylim1=0, fs=12, logx=False, logy=False)
+    local_axes_formatting(axes[1, 1], "Days since 2020-03-06", "Positives-rate / Tests-rate [%]", xlim2=dayspan+1, ylim2=250, xlim1=0, ylim1=0, fs=12, logx=False, logy=False)
+    local_axes_formatting(axes[1, 2], "Days since 2020-03-06", "Deaths-rate / Positives-rate [%]", xlim2=dayspan+1, ylim2=60, xlim1=0, ylim1=0, fs=12, logx=False, logy=False)
     plt.tight_layout()
     for (i, state) in enumerate(states):
         # get the data pertaining the date

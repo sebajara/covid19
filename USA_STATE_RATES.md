@@ -8,9 +8,10 @@
 
 ## Approach
 
-Overall I used the
-[fitderiv](http://swainlab.bio.ed.ac.uk/software/fitderiv/) package for
-inferring derivatives. 
+The goal is to infer derivatives in the variables related to covid-19,
+for which I used the
+[fitderiv](http://swainlab.bio.ed.ac.uk/software/fitderiv/) package
+implementing Gaussian process regression:
 * For derivatives of the positives cases relative to people testes, as
 well as deaths relative to positive cases, the variables were kept
 without transforming them.
@@ -20,7 +21,8 @@ growth-rate). We expect that the number of infected people (some
 function of positive cases) should follow an exponential growth. However
 it is less clear what relation we should expect for the growth of
 testing (somewhat arbitrary process) and deaths (may depend on the
-fraction of risk-population and health-care capacity).
+fraction of risk-population and health-care capacity).  
+
 **NOTE:** The errors are the 95% confidence intervals assuming Gaussian
 distributions and covariance with default parameters. Some of the curves
 present steep transitions and were not able to converge properly during
@@ -48,8 +50,8 @@ most likely as a result of the measures taken.
   delay? Or find the delay that minimizes the variance in
   deaths/positives rates? The second approach sounds interesting if we
   can "safely" assume that the health-care capacity and fraction of
-  risk-population infected is constant over-time. (... or we should fit
-  to a proper dynamical model and forget about this approach).
+  risk-population infected is constant over-time. (... or fit to a
+  proper dynamical model).
 
 ### Relative rates: positives/tests & deaths/positives
 
