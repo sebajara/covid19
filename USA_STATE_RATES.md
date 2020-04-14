@@ -32,13 +32,23 @@ optimization. I am unsure at the moment how best to handle these cases.
   total number of tests. Clearly there are some delays in the reporting
   and different practices state by state. How is testing decided and how
   they is reported/collected?
+* We are inferring directly on the instant relative rates. This will be
+  biased in case there are any delays (e.g. positive cases and deaths).
 
 ## Preliminary analysis
 
 * Overall we can appreciate a reduction in the posive cases growth-rate,
 most likely as a result of the measures taken. 
-* 
-* Death rates...
+* From the other rates I am not entirely sure we can conclude. One
+  challenge is "the total number of tests" that appear to be quite
+  state-dependent. The second is with regards to the rate
+  deaths/positives. Doing instantaneous deaths/positives as I have done
+  here is clearly wrong because of delays. Should we assume a fixed
+  delay? Or find the delay that minimizes the variance in
+  deaths/positives rates? The second approach sounds interesting if we
+  can "safely" assume that the health-care capacity and fraction of
+  risk-population infected is constant over-time. Perhaps we should fit
+  to a proper dynamical model and forget about this.
 
 ### Relative rates: positives/tests & deaths/positives
 
