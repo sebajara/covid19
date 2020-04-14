@@ -49,8 +49,7 @@ most likely as a result of the measures taken.
   deaths/positives rates? The second approach sounds interesting if we
   can "safely" assume that the health-care capacity and fraction of
   risk-population infected is constant over-time. (... or we should fit
-  to a proper dynamical model and forget about this relative rates
-  metric).
+  to a proper dynamical model and forget about this approach).
 
 ### Relative rates: positives/tests & deaths/positives
 
