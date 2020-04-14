@@ -46,8 +46,8 @@ most likely as a result of the measures taken.
   be quite state-dependent and has these steep transitions.
   * Another challenge is with regards to the rate
   deaths/positives. Doing instantaneous deaths/positives as I have done
-  here is clearly wrong because of delays. Should we assume a fixed
-  delay? Or find the delay that minimizes the variance in
+  here is clearly hard to interpret because of delays. Should we assume
+  a fixed delay? Or find the delay that minimizes the variance in
   deaths/positives rates? The second approach sounds interesting if we
   can "safely" assume that the health-care capacity and fraction of
   risk-population infected is constant over-time. (... or fit to a
