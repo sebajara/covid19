@@ -19,6 +19,14 @@ def getcolormapandnorm(minv, maxv, log=False, cmapstr='Greys', N=50):
     return(cmap, norm)
 
 
+def get_list_colors(cmapstr, N):
+    # There should be a way to do this inside plt.
+    # I will keep this one as we could change the scale later if needed
+    # (eg logscale)
+    cmap = plt.cm.get_cmap(name=cmapstr)
+    return [cmap(int(i)) for i in np.linspace(0, cmap.N, N)]
+
+
 def get_point_sizes(values, maxval, maxs=500, mins=5, log=False):
     values[values.isnull()] = 0
     if(log):
