@@ -47,9 +47,10 @@ optimization. I am unsure at the moment how best to handle these cases.
   the quality of data for "total number of tests" appear to vary from
   state to state. How authorities do it?
 * Overall the growth-rate of death cases decreases with time. This could
-  be related to the decrease in posive-cases (assuming sampling is not
-  biased), or also that the fraction of people at risk infected
-  decreases (e.g. because of isolation measures). 
+  a consequence of decreasing the posive cases growth-rate (assuming
+  sampling is not biased), and/or reflect a decrease in the fraction of
+  infected people at risk of dying (e.g. because of isolation measures,
+  or improved medical care?).
 * I need to improve the analysis of death-rates relative to
   positive-cases. Doing instantaneous deaths/positives as I have done
   here is clearly hard to interpret because of delays. Should we assume
