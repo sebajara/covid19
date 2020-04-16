@@ -39,13 +39,19 @@ optimization. I am unsure at the moment how best to handle these cases.
 
 ## Preliminary analysis
 
-* Overall we can appreciate a reduction in the posive cases growth-rate,
-most likely as a result of the measures taken. 
-* From the other rates I am not entirely sure we can conclude. 
-  * One challenge is that the data for "total number of tests" appear to
-  be quite state-dependent and has these steep transitions.
-  * Another challenge is with regards to the rate
-  deaths/positives. Doing instantaneous deaths/positives as I have done
+* Overall the growth-rate of posive cases appear to decrease, could be
+  interpreted as a result of the measures taken. However the rate-ratio
+  of positives relative to total tests appear flat in many
+  states. Without any understanding of how tests relate to the total
+  population seems difficult to make a conclusion. One challenge is that
+  the quality of data for "total number of tests" appear to vary from
+  state to state. How authorities do it?
+* Overall the growth-rate of death cases decreases with time. This could
+  be related to the decrease in posive-cases (assuming sampling is not
+  biased), or also that the fraction of people at risk infected
+  decreases (e.g. because of isolation measures). 
+* I need to improve the analysis of death-rates relative to
+  positive-cases. Doing instantaneous deaths/positives as I have done
   here is clearly hard to interpret because of delays. Should we assume
   a fixed delay? Or find the delay that minimizes the variance in
   deaths/positives rates? The second approach sounds interesting if we
