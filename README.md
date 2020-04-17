@@ -3,10 +3,11 @@
 This is a collection of resources, visualizations, and analysis
 regarding the Covid-19 pandemic. For now it includes some graphical
 representations, and an example on how to use Gaussian Process to infer
-the rates of positive cases and deaths with time and with respect to
-each other. Once the epidemic passes the goal will be to correlate the
-dynamics of individual countries and US' states with their respective
-responses, as well as some socio-economic metrics.
+the rates (US only for now).
+
+Once the epidemic passes the goal will be to correlate the dynamics of
+individual countries and US' states with their respective responses, as
+well as some socio-economic metrics.
 
 ## Countries
 
