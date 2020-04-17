@@ -8,6 +8,11 @@ from localutils.plotutils import addtexts2axes
 from localutils.plotutils import figsaveandclose
 from localutils.plotutils import figs2gif
 
+# NOTE: would be nice instead of using scatter circles, use the shape of each state instead
+# https://github.com/coryetzkorn/state-svg-defs
+# We could also use countries flags
+# https://github.com/HatScripts/circle-flags?files=1
+
 #from importlib import reload
 
 # ===== Get covidtracking data for the us states
@@ -102,6 +107,6 @@ figsaveandclose(fig=make_eda_fig2(dates[-1], positives_low_min=100), output="../
 # Make an animation with the plots for each date.
 # NOTE: I tried doing gif via matplotlib, but got tired. Doing regular
 # convert instead, it requires saving individual figures into a temp/ folder.
-figs2gif(dates, make_eda_fig1, '../figures/covidtracking_states_eda1.gif', 60)
+#figs2gif(dates, make_eda_fig1, '../figures/covidtracking_states_eda1.gif', 60)
 figs2gif(dates, make_eda_fig1, '../figures/covidtracking_states_eda1_zoom.gif', 60, positives_low_min=100)
-figs2gif(dates, make_eda_fig2, '../figures/covidtracking_states_eda2_zoom.gif', 60, positives_low_min=100)
+#figs2gif(dates, make_eda_fig2, '../figures/covidtracking_states_eda2_zoom.gif', 60, positives_low_min=100)

@@ -10,6 +10,14 @@ responses, as well as some socio-economic metrics.
 
 ## Countries
 
+Here is an animation showing the evolution of covid19 by country.
+![Animation of US data by state from covidtracking](figures/ecdc_countries_eda1_zoom.gif)
+Each point represents a country, the circle sizes are by the estimated
+population in 2018, and the colors are by the total number of reported
+deaths (from white to dark red). Notice we are using log-scales and
+total positives scale begins from 10. Data taken from the [European
+CDC](https://opendata.ecdc.europa.eu/covid19/casedistribution/csv).
+
 ## USA States
 
 Here is an animation showing the evolution of covid19 in the USA (by state).
@@ -56,6 +64,7 @@ In the document [USA_STATE_RATES.md](USA_STATE_RATES.md) I describe the
 * Interesting preliminary analysis from concerned citizens [the-hammer-and-the-dance](https://medium.com/@tomaspueyo/coronavirus-the-hammer-and-the-dance-be9337092b56)
 
 ## More general resources on infection disease modelling
+* [Kissler2020](https://science.sciencemag.org/content/early/2020/04/14/science.abb5793)
 * Modeling of SEIRS epidemic dynamics with extensions, including
   network-structured populations, testing, contact tracing, and social
   distancing. [seirsplus](https://github.com/ryansmcgee/seirsplus)
