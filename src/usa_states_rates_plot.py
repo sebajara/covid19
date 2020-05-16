@@ -19,6 +19,7 @@ with open("analyzed_data/covidtracking_states_df_rates.pickle", "rb") as file:
 
 # Get a few variables that will help up later
 max_death = states_df_rates['death'].max()
+max_test = states_df_rates['positive'].max()+states_df_rates['negative'].max()
 max_pop = states_info['POPESTIMATE2019'].max()
 dates = np.sort(states_df_rates['date'].unique())
 min_date = states_df_rates['date'].min()
@@ -48,14 +49,14 @@ def make_fig1(date, positives_low_min=1):
     fig, axes = plt.subplots(ncols=3, nrows=2, figsize=(11.5, 6.5))
     # population v/s positives
     axes[0, 0].scatter(population, positives, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[0, 0], "Population", "Total Positives", xlim2=1e08, ylim2=5e05, xlim1=5e05, ylim1=positives_low_min, fs=12)
+    local_axes_formatting(axes[0, 0], "Population", "Total Positives", xlim2=1e08, ylim2=1e06, xlim1=5e05, ylim1=positives_low_min, fs=12)
     # total_test v/s positives
     axes[0, 1].scatter(total_test, positives, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[0, 1], "Total tests", "Total Positives", xlim2=1e06, ylim2=5e05, xlim1=positives_low_min, ylim1=positives_low_min, fs=12)
+    local_axes_formatting(axes[0, 1], "Total tests", "Total Positives", xlim2=1.5*max_test, ylim2=1e06, xlim1=positives_low_min, ylim1=positives_low_min, fs=12)
     axes[0, 1].set_title(np.datetime_as_string(date, unit='D'), fontsize=20)  # put the date as title
     # deaths v/s positives
     axes[0, 2].scatter(deaths, positives, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[0, 2], "Total Deaths", "Total Positives", xlim2=max_death, ylim2=5e05, ylim1=positives_low_min, fs=12)
+    local_axes_formatting(axes[0, 2], "Total Deaths", "Total Positives", xlim2=max_death, ylim2=1e06, ylim1=positives_low_min, fs=12)
     # population v/s positives_rate
     axes[1, 0].scatter(population, gr_positives, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
     local_axes_formatting(axes[1, 0], "Population", "Positives gr-rate [%/day]", xlim2=1e08, ylim2=125, xlim1=5e05, ylim1=0, logy=False, fs=12)
@@ -68,9 +69,9 @@ def make_fig1(date, positives_low_min=1):
     plt.tight_layout()
     # Add the labels for the top states. Note: it is better to add
     # labels after plt.tight_layout()
-    addtexts2axes(axes[0, 0], population, positives, labels, (5e05, 1e08), (positives_low_min, 5e05), qtile=0.9, fs=10)
-    addtexts2axes(axes[0, 1], total_test, positives, labels, (positives_low_min, 5e05), (positives_low_min, 1e06), qtile=0.9, fs=10, yqtile=False)
-    addtexts2axes(axes[0, 2], deaths, positives, labels, (1, max_death), (positives_low_min, 5e05), qtile=0.9, fs=10, yqtile=False)
+    addtexts2axes(axes[0, 0], population, positives, labels, (5e05, 1e08), (positives_low_min, 1e06), qtile=0.9, fs=10)
+    addtexts2axes(axes[0, 1], total_test, positives, labels, (positives_low_min, 1e06), (positives_low_min, 1.5*max_test), qtile=0.9, fs=10, yqtile=False)
+    addtexts2axes(axes[0, 2], deaths, positives, labels, (1, max_death), (positives_low_min, 1e06), qtile=0.9, fs=10, yqtile=False)
     addtexts2axes(axes[1, 0], population, gr_positives, labels, (5e05, 1e08), (0, 125), qtile=0.9, fs=10)
     addtexts2axes(axes[1, 1], gr_total_test, gr_positives, labels, (0, 100), (0, 125), qtile=0.9, fs=10, yqtile=False)
     addtexts2axes(axes[1, 2], gr_deaths, gr_positives, labels, (0, 100), (0, 125), qtile=0.9, fs=10, yqtile=False)
@@ -95,10 +96,10 @@ def make_fig3(date, positives_low_min=1):
     fig, axes = plt.subplots(ncols=3, nrows=2, figsize=(11.5, 6.5))
     # population v/s positives
     axes[0, 0].scatter(population, positives, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[0, 0], "Population", "Total Positives", xlim2=1e08, ylim2=5e05, xlim1=5e05, ylim1=positives_low_min, fs=12)
+    local_axes_formatting(axes[0, 0], "Population", "Total Positives", xlim2=1e08, ylim2=1e06, xlim1=5e05, ylim1=positives_low_min, fs=12)
     # total_test v/s positives
     axes[0, 1].scatter(total_test, positives, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[0, 1], "Total tests", "Total Positives", xlim2=1e06, ylim2=5e05, xlim1=positives_low_min, ylim1=positives_low_min, fs=12)
+    local_axes_formatting(axes[0, 1], "Total tests", "Total Positives", xlim2=1.5*max_test, ylim2=1e06, xlim1=positives_low_min, ylim1=positives_low_min, fs=12)
     axes[0, 1].set_title(np.datetime_as_string(date, unit='D'), fontsize=20)  # put the date as title
     # deaths v/s positives
     axes[0, 2].scatter(positives, deaths, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
@@ -108,19 +109,19 @@ def make_fig3(date, positives_low_min=1):
     local_axes_formatting(axes[1, 0], "Population", "Positives [%/day]", xlim2=1e08, ylim2=100, xlim1=5e05, ylim1=0, logy=False, fs=12)
     # gr_total_test v/s positives_rate
     axes[1, 1].scatter(total_test, gr_total_test, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[1, 1], "Total Tests", "Positives-rate / Tests-rate [%]", xlim1=positives_low_min, xlim2=1e06, ylim1=0, ylim2=125, logy=False, logx=True, fs=12)
+    local_axes_formatting(axes[1, 1], "Total Tests", "Positives-rate / Tests-rate [%]", xlim1=positives_low_min, xlim2=1.5*max_test, ylim1=0, ylim2=125, logy=False, logx=True, fs=12)
     # gr_deaths v/s positives_rate
     axes[1, 2].scatter(positives, gr_deaths, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
     local_axes_formatting(axes[1, 2], "Total Positives", "Deaths-rate / Positives-rate [%]", xlim1=positives_low_min, xlim2=5e05, ylim1=0, ylim2=61, logy=False, logx=True, fs=12)
     plt.tight_layout()
     # Add the labels for the top states. Note: it is better to add
     # labels after plt.tight_layout()
-    addtexts2axes(axes[0, 0], population, positives, labels, (5e05, 1e08), (positives_low_min, 5e05), qtile=0.9, fs=10)
-    addtexts2axes(axes[0, 1], total_test, positives, labels, (positives_low_min, 5e05), (positives_low_min, 1e06), qtile=0.9, fs=10, yqtile=False)
-    addtexts2axes(axes[0, 2], positives, deaths, labels, (positives_low_min, 5e05), (1, max_death), qtile=0.9, fs=10, yqtile=False)
+    addtexts2axes(axes[0, 0], population, positives, labels, (5e05, 1e08), (positives_low_min, 1e06), qtile=0.9, fs=10)
+    addtexts2axes(axes[0, 1], total_test, positives, labels, (positives_low_min, 1e06), (positives_low_min, 1.5*max_test), qtile=0.9, fs=10, yqtile=False)
+    addtexts2axes(axes[0, 2], positives, deaths, labels, (positives_low_min, 1e06), (1, max_death), qtile=0.9, fs=10, yqtile=False)
     addtexts2axes(axes[1, 0], population, gr_positives, labels, (5e05, 1e08), (0, 100), qtile=0.9, fs=10)
-    addtexts2axes(axes[1, 1], total_test, gr_total_test, labels, (positives_low_min, 1e06), (0, 125), qtile=0.9, fs=10, yqtile=True)
-    addtexts2axes(axes[1, 2], positives, gr_deaths, labels, (positives_low_min, 5e05), (0, 61), qtile=0.9, fs=10, yqtile=True)
+    addtexts2axes(axes[1, 1], total_test, gr_total_test, labels, (positives_low_min, 1.5*max_test), (0, 125), qtile=0.9, fs=10, yqtile=True)
+    addtexts2axes(axes[1, 2], positives, gr_deaths, labels, (positives_low_min, 1e06), (0, 61), qtile=0.9, fs=10, yqtile=True)
     return fig
 
 def make_fig2(states):
@@ -129,8 +130,8 @@ def make_fig2(states):
     #colors = plt.cm.get_cmap('jet', len(states))
     colors = get_list_colors('rainbow', len(states))
     fig, axes = plt.subplots(ncols=3, nrows=2, figsize=(11.5, 6.5))
-    local_axes_formatting(axes[0, 0], "Days since 2020-03-06", "Total tests", xlim1=0, xlim2=dayspan+1, ylim1=1, ylim2=1e06, fs=12, logx=False)
-    local_axes_formatting(axes[0, 1], "Days since 2020-03-06", "Total Positives", xlim2=dayspan+1, ylim2=1e06, xlim1=0, ylim1=1, fs=12, logx=False)
+    local_axes_formatting(axes[0, 0], "Days since 2020-03-06", "Total tests", xlim1=0, xlim2=dayspan+1, ylim1=1, ylim2=1.5*max_test, fs=12, logx=False)
+    local_axes_formatting(axes[0, 1], "Days since 2020-03-06", "Total Positives", xlim2=dayspan+1, ylim2=1.5*max_test, xlim1=0, ylim1=1, fs=12, logx=False)
     local_axes_formatting(axes[0, 2], "Days since 2020-03-06", "Total Deaths", xlim2=dayspan+1, ylim2=max_death, xlim1=0, ylim1=1, fs=12, logx=False)
     local_axes_formatting(axes[1, 0], "Days since 2020-03-06", "Tests gr-rate [%/day]", xlim2=dayspan+1, ylim2=100, xlim1=0, ylim1=0, fs=12, logx=False, logy=False)
     local_axes_formatting(axes[1, 1], "Days since 2020-03-06", "Positives gr-rate [%/day]", xlim2=dayspan+1, ylim2=100, xlim1=0, ylim1=0, fs=12, logx=False, logy=False)
@@ -174,8 +175,8 @@ def make_fig4(states):
     #colors = plt.cm.get_cmap('jet', len(states))
     colors = get_list_colors('rainbow', len(states))
     fig, axes = plt.subplots(ncols=3, nrows=2, figsize=(11.5, 6.5))
-    local_axes_formatting(axes[0, 0], "Days since 2020-03-06", "Total Positives", xlim2=dayspan+1, ylim2=1e06, xlim1=0, ylim1=1, fs=12, logx=False)
-    local_axes_formatting(axes[0, 1], "Days since 2020-03-06", "Total tests", xlim1=0, xlim2=dayspan+1, ylim1=1, ylim2=1e06, fs=12, logx=False)
+    local_axes_formatting(axes[0, 0], "Days since 2020-03-06", "Total Positives", xlim2=dayspan+1, ylim2=1.5*max_test, xlim1=0, ylim1=1, fs=12, logx=False)
+    local_axes_formatting(axes[0, 1], "Days since 2020-03-06", "Total tests", xlim1=0, xlim2=dayspan+1, ylim1=1, ylim2=1.5*max_test, fs=12, logx=False)
     local_axes_formatting(axes[0, 2], "Days since 2020-03-06", "Total Deaths", xlim2=dayspan+1, ylim2=max_death, xlim1=0, ylim1=1, fs=12, logx=False)
     local_axes_formatting(axes[1, 0], "Days since 2020-03-06", "Positives [%/day]", xlim2=dayspan+1, ylim2=100, xlim1=0, ylim1=0, fs=12, logx=False, logy=False)
     local_axes_formatting(axes[1, 1], "Days since 2020-03-06", "Positives-rate / Tests-rate [%]", xlim2=dayspan+1, ylim2=250, xlim1=0, ylim1=0, fs=12, logx=False, logy=False)
@@ -238,8 +239,8 @@ sets = [['CA', 'TX', 'FL', 'NY', 'PA'],
         ['SD', 'ND', 'AK', 'DC', 'VT', 'WY'],
         ['AS', 'GU', 'MP', 'PR', 'VI']]
 
-fig = make_fig4(sets[8])
-plt.show()
+#fig = make_fig4(sets[8])
+#plt.show()
 
 for (i, set) in enumerate(sets):
     figsaveandclose(fig=make_fig2(set), output="../figures/covidtracking_states_rates_byset_{}.png".format(i))

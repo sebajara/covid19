@@ -17,6 +17,7 @@ from localutils.plotutils import figs2gif
 
 # ===== Get covidtracking data for the us states
 (states_df, states_info) = covidtracking_ustates()
+max_test = states_df['positive'].max()+states_df['negative'].max()
 max_death = states_df['death'].max()
 max_pop = states_info['POPESTIMATE2019'].max()
 dates = np.sort(states_df['date'].unique())
@@ -42,20 +43,20 @@ def make_eda_fig1(date, positives_low_min=1):
     fig, axes = plt.subplots(ncols=3, nrows=1, figsize=(14, 5))
     # population v/s positives
     axes[0].scatter(population, positives, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[0], "Population", "Total Positives", xlim2=1e08, ylim2=1e06, xlim1=5e05, ylim1=positives_low_min)
+    local_axes_formatting(axes[0], "Population", "Total Positives", xlim2=1e08, ylim2=1.5*max_test, xlim1=5e05, ylim1=positives_low_min)
     # total_test v/s positives
     axes[1].scatter(total_test, positives, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[1], "Total tests", "Total Positives", xlim2=1e06, ylim2=1e06, xlim1=positives_low_min, ylim1=positives_low_min)
+    local_axes_formatting(axes[1], "Total tests", "Total Positives", xlim2=1.5*max_test, ylim2=1.5*max_test, xlim1=positives_low_min, ylim1=positives_low_min)
     axes[1].set_title(np.datetime_as_string(date, unit='D'), fontsize=20)  # put the date as title
     # deaths v/s positives
     axes[2].scatter(deaths, positives, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[2], "Total Deaths", "Total Positives", xlim2=1e04, ylim2=1e06, ylim1=positives_low_min)
+    local_axes_formatting(axes[2], "Total Deaths", "Total Positives", xlim2=1.5*max_death, ylim2=1.5*max_test, ylim1=positives_low_min)
     plt.tight_layout()
     # Add the labels for the top states. Note: it is better to add
     # labels after plt.tight_layout()
-    addtexts2axes(axes[0], population, positives, labels, (5e05, 1e08), (positives_low_min, 1e06), qtile=0.9)
-    addtexts2axes(axes[1], total_test, positives, labels, (positives_low_min, 1e06), (positives_low_min, 1e06), qtile=0.9)
-    addtexts2axes(axes[2], deaths, positives, labels, (1, 1e04), (positives_low_min, 1e06), qtile=0.9)
+    addtexts2axes(axes[0], population, positives, labels, (5e05, 1e08), (positives_low_min, 1.5*max_test), qtile=0.9)
+    addtexts2axes(axes[1], total_test, positives, labels, (positives_low_min, 1.5*max_test), (positives_low_min, 1.5*max_test), qtile=0.9)
+    addtexts2axes(axes[2], deaths, positives, labels, (1, 1.5*max_death), (positives_low_min, 1.5*max_test), qtile=0.9)
     return fig
 
 
@@ -77,22 +78,22 @@ def make_eda_fig2(date, positives_low_min=1):
     # population v/s positives
     axes[0].scatter(population, positives, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
     local_axes_formatting(axes[0], "Population", "Total Positives",
-                          xlim2=1e08, ylim2=1e06, xlim1=5e05, ylim1=positives_low_min)
+                          xlim2=1e08, ylim2=1.5*max_test, xlim1=5e05, ylim1=positives_low_min)
     # total_test v/s positives
     axes[1].scatter(tests, positives_ratio, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
     local_axes_formatting(axes[1], "Total Tests", "Positives / Tests [%]",
-                          xlim2=1e06, ylim2=100, xlim1=positives_low_min, ylim1=0, logy=False)
+                          xlim2=1.5*max_test, ylim2=100, xlim1=positives_low_min, ylim1=0, logy=False)
     axes[1].set_title(np.datetime_as_string(date, unit='D'), fontsize=20)  # put the date as title
     # deaths v/s positives
     axes[2].scatter(positives, death_ratio, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
     local_axes_formatting(axes[2], "Total Positives", "Deaths / Positives [%]",
-                          xlim2=1e06, ylim2=8, xlim1=positives_low_min, ylim1=0, logy=False)
+                          xlim2=1.5*max_test, ylim2=8, xlim1=positives_low_min, ylim1=0, logy=False)
     plt.tight_layout()
     # Add the labels for the top states. Note: it is better to add
     # labels after plt.tight_layout()
-    addtexts2axes(axes[0], population, positives, labels, (5e05, 1e08), (positives_low_min, 1e06), qtile=0.85)
-    addtexts2axes(axes[1], tests, positives_ratio, labels, (positives_low_min, 1e06), (0, 100), qtile=0.85)
-    addtexts2axes(axes[2], positives, death_ratio, labels, (positives_low_min, 1e06), (0, 8), qtile=0.85)
+    addtexts2axes(axes[0], population, positives, labels, (5e05, 1e08), (positives_low_min, 1.5*max_test), qtile=0.85)
+    addtexts2axes(axes[1], tests, positives_ratio, labels, (positives_low_min, 1.5*max_test), (0, 100), qtile=0.85)
+    addtexts2axes(axes[2], positives, death_ratio, labels, (positives_low_min, 1.5*max_test), (0, 8), qtile=0.85)
     return fig
 
 

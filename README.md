@@ -5,9 +5,16 @@ regarding the Covid-19 pandemic. For now it includes some graphical
 representations, and an example on how to use Gaussian Process to infer
 the rates (US only for now).
 
-Once the epidemic passes the goal will be to correlate the dynamics of
-individual countries and US' states with their respective responses, as
-well as some socio-economic metrics.
+My goal is to eventually correlate the dynamics of individual countries
+and US' states with their respective responses, as well as some
+socio-economic metrics.
+
+## TOC
+
+* [Countries](#Countries)
+* [USA by state](#USA-by-state)
+* [Data sources on Covid19](#Data-sources-on-Covid19)
+* [Interesting analysis and commentaries on Covid19](#Interesting-analysis-and-commentaries-on-Covid19)
 
 ## Countries
 
@@ -17,9 +24,14 @@ Each point represents a country, the circle sizes are by the estimated
 population in 2018, and the colors are by the total number of reported
 deaths (from white to dark red). Notice we are using log-scales and
 total positives scale begins from 10. Data taken from the [European
-CDC](https://opendata.ecdc.europa.eu/covid19/casedistribution/csv).
+CDC](https://opendata.ecdc.europa.eu/covid19/casedistribution/csv). Scripts:
+[update_alldata.sh](data/update_alldata.sh),
+[countries_eda.py](src/countries_eda.py).
 
-## USA States
+## USA by state
+
+In the document [USA_STATE_RATES.md](USA_STATE_RATES.md) I describe the
+(ongoing) resuls related to inferring rates using Gaussian Process.
 
 Here is an animation showing the evolution of covid19 in the USA (by state).
 ![Animation of US data by state from covidtracking](figures/covidtracking_states_eda1_zoom.gif)
@@ -30,12 +42,7 @@ and the colors are by the total number of reported deaths (from white to
 dark red). Notice we are using log-scales and total positives scale
 begins from 100. A few states were not included because I lacked the
 population data. Data taken from
-[covidtracking](https://covidtracking.com/), mostly because it included
-the number of tests performed on each state. Quality varies, see website
-for details.
-
-In the document [USA_STATE_RATES.md](USA_STATE_RATES.md) I describe the
-(ongoing) resuls related to inferring rates using Gaussian Process.
+[covidtracking](https://covidtracking.com/).
 
 ## Data sources on Covid19
 * Covid19 data by country compiled by the European Centre for Disease Prevention and Control [ecdc-covid-19-cases-worldwide](https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases)
@@ -43,6 +50,8 @@ In the document [USA_STATE_RATES.md](USA_STATE_RATES.md) I describe the
 * Johns Hopkins CSSE repo [github/Johns-Hopkins/COVID-19](https://github.com/CSSEGISandData/COVID-19)
 * Covid19 data from the US by state. It includes number of tests. [covidtracking](https://covidtracking.com/)
 * Covid19 data from the US by state and county. Does not include number of tests. [github/nytimes/covid-19-data](https://github.com/nytimes/covid-19-data)
+* Covid19 data from the US by state by race. [covidtracking/race](https://covidtracking.com/race)
+* Covid19 data from the US on prisons. [github/themarshallproject/COVID_prison](https://github.com/themarshallproject/COVID_prison_data)
 * Covid data from France [github/opencovid19-fr](https://github.com/opencovid19-fr/data)
 * Hospital covid data from France [donnees-hospitalieres-relatives-a-lepidemie-de-covid-19](https://www.data.gouv.fr/fr/datasets/donnees-hospitalieres-relatives-a-lepidemie-de-covid-19/)
 * Covid19 data from Germany [github/covid-19-germany-gae](https://github.com/jgehrcke/covid-19-germany-gae)
@@ -52,17 +61,19 @@ In the document [USA_STATE_RATES.md](USA_STATE_RATES.md) I describe the
 ## Interesting analysis and commentaries on Covid19
 * Genomic epidemiology of covid19 [nextstrain/ncov](https://nextstrain.org/ncov)
 * Analysis by OurWorldInData. Good charts and discussions. [ourworldindata/coronavirus](https://ourworldindata.org/coronavirus)
+* List of Collaborative projects on Covid19 data [Call-for-action](https://docs.google.com/document/d/1JWeD1AaIGKMPry_EN8GjIqwX4J4KLQIAqP09exZ-ENI/edit?mkt_tok=eyJpIjoiT0RRd1lqZzVaREF4WVdSbSIsInQiOiJWODlWM0k3dktTbXg0R1ZWbUxpZHlYSEdvalN4WjJcL0llZ0VoV29Veml4XC9PQldKMzN4eUVESzR0QUUzUGwydDhDaFZLKzFPRkR6ajBZNG8yVXRuN01uU0Nqemc4TVJUZERUZ1NQYkV5REs3ZjE2Zm5mZE9BTmtPWEVTd2xhM0RCIn0%3D#)
 * Collection of tableau graphics [tableau-data-resources](https://www.tableau.com/covid-19-coronavirus-data-resources)
 * Collection of different statistical analysis and visualizations on
   covid19 data by people interested. [covid19dashboards](https://covid19dashboards.com/)
 * Oxford is tracking goverment responses and the number of covid cases. [oxford-covid-19-government-response-tracker](https://www.bsg.ox.ac.uk/research/research-projects/oxford-covid-19-government-response-tracker)
 * The paper that changed the mind of the UK goverment on how to handle the virus. Historically relevant
   [Imperial-College-COVID19-NPI-modelling](https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-College-COVID19-NPI-modelling-16-03-2020.pdf)
-* Article on what is the "good" attitude one should have when doing data science on covid19 [How_To_Be_Curious_Instead_of_Contrarian_About_Covid19](https://rexdouglass.github.io/TIGR/Douglass_2020_How_To_Be_Curious_Instead_of_Contrarian_About_Covid19.nb.html)
-* Article on potential danger of making all models equally relative. Lessons learned from the public opinion on climate change. [all-models-are-wrong-but-some-are-completely-wrong](https://rssdss.design.blog/2020/03/31/all-models-are-wrong-but-some-are-completely-wrong/)
-* Article discussing some of the difficulties in modeling the infection, mostly on how data is constructed and hidden variables [why-its-so-freaking-hard-to-make-a-good-covid-19-model](https://fivethirtyeight.com/features/why-its-so-freaking-hard-to-make-a-good-covid-19-model/)
-* Article on the meaning of positive cases, and some other ways to estimate the actual number of cases [coronavirus-case-counts-are-meaningless](https://fivethirtyeight.com/features/coronavirus-case-counts-are-meaningless/)
-* Interesting preliminary analysis from concerned citizens [the-hammer-and-the-dance](https://medium.com/@tomaspueyo/coronavirus-the-hammer-and-the-dance-be9337092b56)
+* Working paper on "Misinformation During a Pandemic" [bfi.uchicago.edu/Misinformation-paper](https://bfi.uchicago.edu/working-paper/2020-44/)
+* Article on what is the "good" attitude one should have when doing data science on covid19 [rexdouglass/How_To_Be_Curious_Instead_of_Contrarian_About_Covid19](https://rexdouglass.github.io/TIGR/Douglass_2020_How_To_Be_Curious_Instead_of_Contrarian_About_Covid19.nb.html)
+* Article about how making all models relative is potentially dangerous to public opinion. Some are worst than others. Lessons learned from the discourse on climate change. [rssdss/all-models-are-wrong-but-some-are-completely-wrong](https://rssdss.design.blog/2020/03/31/all-models-are-wrong-but-some-are-completely-wrong/)
+* Article discussing some of the difficulties in modeling the infection, mostly on how data is constructed and hidden variables [fivethirtyeight/why-its-so-freaking-hard-to-make-a-good-covid-19-model](https://fivethirtyeight.com/features/why-its-so-freaking-hard-to-make-a-good-covid-19-model/)
+* Article on the meaning of positive cases, and some other ways to estimate the actual number of cases [fivethirtyeight/coronavirus-case-counts-are-meaningless](https://fivethirtyeight.com/features/coronavirus-case-counts-are-meaningless/)
+* Medium article with an interesting preliminary analysis from concerned people [medium/tomaspueyo/the-hammer-and-the-dance](https://medium.com/@tomaspueyo/coronavirus-the-hammer-and-the-dance-be9337092b56)
 
 ## More general resources on infection disease modelling
 * [Kissler2020](https://science.sciencemag.org/content/early/2020/04/14/science.abb5793)
@@ -70,11 +81,9 @@ In the document [USA_STATE_RATES.md](USA_STATE_RATES.md) I describe the
   network-structured populations, testing, contact tracing, and social
   distancing. [seirsplus](https://github.com/ryansmcgee/seirsplus)
 * Paper on how to incorporate behavioural change in forecasting
-  models. "Systematic biases in disease forecasting – The role of
-  behavior
-  change". [link](https://www.sciencedirect.com/science/article/pii/S1755436518301063?via%3Dihub)
+  models. ["Systematic biases in disease forecasting – The role of
+  behavior change"](https: //www.sciencedirect.com/science/article/pii/S1755436518301063?via%3Dihub)
 * Paper on the Importance on accounting individual variability v/s average population
   models. They describe how individual-specific control measures can
-  outperform population-wide measures". "Superspreading and the effect
-  of individual variation on disease
-  emergence". [link](https://www.nature.com/articles/nature04153)
+  outperform population-wide measures. ["Superspreading and the effect
+  of individual variation on disease emergence"](https://www.nature.com/articles/nature04153)

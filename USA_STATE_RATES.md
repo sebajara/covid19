@@ -1,17 +1,24 @@
 ## TOC
 
-* [Approach](#Approach)
+* [Approach and scripts](#Approach-and-scripts)
 * [Preliminary analysis](#preliminary-analysis)
   * [Relative rates: positives/tests & deaths/positives](#relative-rates-positivestests--deathspositives)
   * [Growth-rates with respect to time](#growth-rates-with-respect-to-time)
 * [Directions](#directions)
 
-## Approach
+## Approach and scripts
 
-The goal is to infer derivatives in the variables related to covid-19,
-for which I used the
-[fitderiv](http://swainlab.bio.ed.ac.uk/software/fitderiv/) package
-implementing Gaussian process regression:
+I used the [fitderiv](http://swainlab.bio.ed.ac.uk/software/fitderiv/)
+package implementing Gaussian process regression to infer derivatives in
+the variables related to Covid-19. 
+
+Overall procedure:
+* Download data with [update_alldata.sh](data/update_alldata.sh)
+* Make general animations with [usa_states_eda.py](src/usa_states_eda.py)
+* Estimate rates with Gaussian process regression [usa_states_rates.py](src/usa_states_rates.py)
+* Generate plots with the estimated rates [usa_states_rates_plot.py](src/usa_states_rates_plot.py)
+
+A few notes:
 * For derivatives of the positives cases relative to people testes, as
 well as deaths relative to positive cases, the variables were kept
 without transforming them.
@@ -22,8 +29,7 @@ function of positive cases) should follow an exponential growth. However
 it is less clear what relation we should expect for the growth of
 testing (somewhat arbitrary process) and deaths (may depend on the
 fraction of risk-population and health-care capacity).  
-
-**NOTE:** The errors are the 95% confidence intervals assuming Gaussian
+* The reported errors are the 95% confidence intervals assuming Gaussian
 distributions and covariance with default parameters. Some of the curves
 present steep transitions and were not able to converge properly during
 optimization. I am unsure at the moment how best to handle these cases.
