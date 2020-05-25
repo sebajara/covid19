@@ -56,16 +56,19 @@ population data. Data taken from
 * Hospital covid data from France [donnees-hospitalieres-relatives-a-lepidemie-de-covid-19](https://www.data.gouv.fr/fr/datasets/donnees-hospitalieres-relatives-a-lepidemie-de-covid-19/)
 * Covid19 data from Germany [github/covid-19-germany-gae](https://github.com/jgehrcke/covid-19-germany-gae)
 * Covid19 data from Spain [github/datadista/COVID 2019](https://github.com/datadista/datasets/tree/master/COVID%2019)
+* Covid19 data for Lating America [github/covid_latinoamerica](https://github.com/DataScienceResearchPeru/covid-19_latinoamerica)
 * "COVID-19 Economic Stimulus Index" [paper](http://web.boun.edu.tr/elgin/COVID_19.pdf), [website](http://web.boun.edu.tr/elgin/COVID.htm), [data](COVID-19 Economic Stimulus Index)
+* Oxford is tracking goverment responses and the number of covid cases. [oxford-covid-19-government-response-tracker](https://www.bsg.ox.ac.uk/research/research-projects/oxford-covid-19-government-response-tracker)
+* Data from The Economist on tracking the actual v/s expected number of deaths [github/TheEconomist/excess-deaths](https://github.com/TheEconomist/covid-19-excess-deaths-tracker)
+
 
 ## Interesting analysis and commentaries on Covid19
 * Genomic epidemiology of covid19 [nextstrain/ncov](https://nextstrain.org/ncov)
 * Analysis by OurWorldInData. Good charts and discussions. [ourworldindata/coronavirus](https://ourworldindata.org/coronavirus)
+* Preliminary assessment of CDC data reporting by May 18th (US) [covidtracking-CDC-report](https://covidtracking.com/documents/CDC%20Data%20Report%20%20-%20The%20COVID%20Tracking%20Project.pdf) 
 * List of Collaborative projects on Covid19 data [Call-for-action](https://docs.google.com/document/d/1JWeD1AaIGKMPry_EN8GjIqwX4J4KLQIAqP09exZ-ENI/edit?mkt_tok=eyJpIjoiT0RRd1lqZzVaREF4WVdSbSIsInQiOiJWODlWM0k3dktTbXg0R1ZWbUxpZHlYSEdvalN4WjJcL0llZ0VoV29Veml4XC9PQldKMzN4eUVESzR0QUUzUGwydDhDaFZLKzFPRkR6ajBZNG8yVXRuN01uU0Nqemc4TVJUZERUZ1NQYkV5REs3ZjE2Zm5mZE9BTmtPWEVTd2xhM0RCIn0%3D#)
 * Collection of tableau graphics [tableau-data-resources](https://www.tableau.com/covid-19-coronavirus-data-resources)
-* Collection of different statistical analysis and visualizations on
-  covid19 data by people interested. [covid19dashboards](https://covid19dashboards.com/)
-* Oxford is tracking goverment responses and the number of covid cases. [oxford-covid-19-government-response-tracker](https://www.bsg.ox.ac.uk/research/research-projects/oxford-covid-19-government-response-tracker)
+* Collection of different statistical analysis and visualizations [covid19dashboards](https://covid19dashboards.com/)
 * The paper that changed the mind of the UK goverment on how to handle the virus. Historically relevant
   [Imperial-College-COVID19-NPI-modelling](https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-College-COVID19-NPI-modelling-16-03-2020.pdf)
 * Working paper on "Misinformation During a Pandemic" [bfi.uchicago.edu/Misinformation-paper](https://bfi.uchicago.edu/working-paper/2020-44/)
@@ -74,6 +77,7 @@ population data. Data taken from
 * Article discussing some of the difficulties in modeling the infection, mostly on how data is constructed and hidden variables [fivethirtyeight/why-its-so-freaking-hard-to-make-a-good-covid-19-model](https://fivethirtyeight.com/features/why-its-so-freaking-hard-to-make-a-good-covid-19-model/)
 * Article on the meaning of positive cases, and some other ways to estimate the actual number of cases [fivethirtyeight/coronavirus-case-counts-are-meaningless](https://fivethirtyeight.com/features/coronavirus-case-counts-are-meaningless/)
 * Medium article with an interesting preliminary analysis from concerned people [medium/tomaspueyo/the-hammer-and-the-dance](https://medium.com/@tomaspueyo/coronavirus-the-hammer-and-the-dance-be9337092b56)
+* Interesting article about how changes in behavior during the pandemic have caused challenges to AI models. [technologyreview-AI-covid-change](https://www.technologyreview.com/2020/05/11/1001563/covid-pandemic-broken-ai-machine-learning-amazon-retail-fraud-humans-in-the-loop/)
 
 ## More general resources on infection disease modelling
 * [Kissler2020](https://science.sciencemag.org/content/early/2020/04/14/science.abb5793)
