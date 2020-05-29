@@ -6,7 +6,7 @@ from localutils.plotutils import get_point_sizes
 from localutils.plotutils import local_axes_formatting
 from localutils.plotutils import addtexts2axes
 from localutils.plotutils import figsaveandclose
-from localutils.plotutils import figs2gif
+from localutils.plotutils import get_list_colors
 
 world_df = pd.read_csv('../data/ecdc/ecdc_data.csv')
 world_df['dateRep'] = pd.to_datetime(world_df['dateRep'], format="%d/%m/%Y")
@@ -21,48 +21,55 @@ for name in names:
     ind = sdf.index
     csum_cases = np.cumsum(sdf['cases'])
     csum_deaths = np.cumsum(sdf['deaths'])
+    per_per_cap = 100*csum_cases/sdf['popData2018'].iloc[0]
+    per_per_cap2 = 100*csum_deaths/sdf['popData2018'].iloc[0]
     world_df.loc[ind, 'total_cases'] = csum_cases
     world_df.loc[ind, 'total_deaths'] = csum_deaths
+    world_df.loc[ind, 'cases_per_cap'] = per_per_cap
+    world_df.loc[ind, 'deaths_per_cap'] = per_per_cap2
 
 max_death = world_df['total_deaths'].max()
 max_pop = world_df['popData2018'].max()
 max_cases = world_df['total_cases'].max()
 dates = np.sort(world_df['dateRep'].unique())
+min_date = dates.min()
+max_date = dates.max()
+countries = world_df[world_df['total_cases']>1e04]['countriesAndTerritories'].unique()
 
-(cmap, norm) = getcolormapandnorm(1, max_death, log=True, cmapstr='YlOrRd', N=100)
+# (cmap, norm) = getcolormapandnorm(1, max_death, log=True, cmapstr='YlOrRd', N=100)
 
-def make_eda_fig1(date, positives_low_min=1):
-    # get the data pertaining the date
-    sdf = world_df[world_df['dateRep'] == date].fillna(0)
-    # named variables
-    labels = sdf['geoId']
-    deaths = sdf['total_deaths']
-    positives = (sdf['total_cases'])
-    population = (sdf['popData2018'])
-    sizes = get_point_sizes(population.copy(), max_pop)
-    # acutal plotting
-    fig, axes = plt.subplots(ncols=2, nrows=1, figsize=(9.3, 5))
-    # population v/s positives
-    axes[0].scatter(population, positives, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[0], "Population", "Total Cases", xlim1=1e04, xlim2=3e09, ylim1=positives_low_min, ylim2=3e06)
-    # deaths v/s positives
-    axes[1].scatter(positives, deaths, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[1], "Total Cases", "Total Deaths", xlim1=positives_low_min, xlim2=3e06, ylim2=1e05)
-    axes[0].set_title(np.datetime_as_string(date, unit='D'), fontsize=20)  # put the date as title
-    axes[1].set_title(np.datetime_as_string(date, unit='D'), fontsize=20)  # put the date as title
+fig, axes = plt.subplots(ncols=3, nrows=2, figsize=(11.5, 6.5))
+colors = get_list_colors('rainbow', len(countries))
+for (i, country) in enumerate(countries):
+    sizes = 1
+    edgecolor = (0.4, 0.4, 0.4)
+    color = colors[i]
+    sdf = world_df[world_df['countriesAndTerritories'] == country].sort_values('dateRep', ascending=True)
+    days = pd.Series((sdf['dateRep'] - min_date).values/np.timedelta64(1, 'D'))
+    axes[0, 0].plot(days, sdf['total_cases'], 'o:', c=color, alpha=0.5, markersize=sizes, markeredgecolor=color)
+    local_axes_formatting(axes[0, 0], "Days since 2020", "Total Positives", xlim2=150, ylim2=1e07, xlim1=1, ylim1=10, logx=False, fs=12)
+    axes[0, 1].plot(days, sdf['total_deaths'], 'o:', c=color, alpha=0.5, markersize=sizes, markeredgecolor=color)
+    local_axes_formatting(axes[0, 1], "Days since 2020", "Total Deaths", xlim2=150, ylim2=2e05, xlim1=1, ylim1=10, logx=False, fs=12)
+    axes[1, 0].plot(days, sdf['cases_per_cap'], 'o:', c=color, alpha=0.5, markersize=sizes, markeredgecolor=color)
+    local_axes_formatting(axes[1, 0], "Days since 2020", "Positives/Population [%]", xlim2=150, ylim2=5, xlim1=1, ylim1=0.001, logx=False, fs=12)
+    axes[1, 1].plot(days, sdf['deaths_per_cap'], 'o:', c=color, alpha=0.5, markersize=sizes, markeredgecolor=color)
+    local_axes_formatting(axes[1, 1], "Days since 2020", "Deaths/Population [%]", xlim2=150, ylim2=0.3, xlim1=1, ylim1=0.00001, logx=False, fs=12)
+    size = 200*sdf['popData2018'].iloc[0]/max_pop
+    axes[0, 2].scatter(sdf['total_cases'].iloc[-1], sdf['total_deaths'].iloc[-1], color=color, edgecolors='k', alpha=0.75, s=size)
+    if(sdf['total_deaths'].iloc[-1] > 2e04):
+        f1 = np.random.choice([0.7, 1.2])
+        f2 = np.random.choice([0.7, 1.2])
+        axes[0, 2].text(f1*sdf['total_cases'].iloc[-1], f1*sdf['total_deaths'].iloc[-1],
+                        sdf['countryterritoryCode'].iloc[-1], horizontalalignment='left',
+                        verticalalignment='bottom', color='k', fontsize=10)
+    local_axes_formatting(axes[0, 2], "Total Positives", "Total deaths", xlim2=1e07, xlim1=1e04, ylim2=2e05, ylim1=100, fs=12)
+    axes[1, 2].scatter(sdf['cases_per_cap'].iloc[-1], sdf['deaths_per_cap'].iloc[-1], color=color, edgecolors='k', alpha=0.75, s=size)
+    local_axes_formatting(axes[1, 2], "Positives/Population", "Deaths/Population", xlim2=5, xlim1=0.001, ylim2=0.3, ylim1=0.0001, fs=12)
+    if(sdf['deaths_per_cap'].iloc[-1] > 0.05):
+        f1 = np.random.choice([0.7, 1.2])
+        f2 = np.random.choice([0.7, 1.2])
+        axes[1, 2].text(f1*sdf['cases_per_cap'].iloc[-1], f1*sdf['deaths_per_cap'].iloc[-1],
+                        sdf['countryterritoryCode'].iloc[-1], horizontalalignment='left',
+                        verticalalignment='bottom', color='k', fontsize=10)
     plt.tight_layout()
-    # Add the labels for the top states. Note: it is better to add
-    # labels after plt.tight_layout()
-    addtexts2axes(axes[0], population, positives, labels, (1e04, 3e09), (positives_low_min, 3e06), qtile=0.96)
-    addtexts2axes(axes[1], positives, deaths, labels, (positives_low_min, 3e06), (1, 1e05), qtile=0.96)
-    return fig
-
-#fig = make_eda_fig1(dates[0], positives_low_min=10)
-#plt.show()
-
-#fig = make_eda_fig1(dates[-1])
-#plt.show()
-
-figsaveandclose(fig=make_eda_fig1(dates[-1]), output="../figures/ecdc_countries_eda1_latest.png")
-figsaveandclose(fig=make_eda_fig1(dates[-1], positives_low_min=10), output="../figures/ecdc_countries_eda1_latest_zoom.png")
-figs2gif(dates, make_eda_fig1, '../figures/ecdc_countries_eda1_zoom.gif', 60, positives_low_min=10)
+figsaveandclose(fig, output="../figures/ecdc_countries_eda.png")

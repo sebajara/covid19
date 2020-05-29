@@ -18,12 +18,11 @@ socio-economic metrics.
 
 ## Countries
 
-Here is an animation showing the evolution of covid19 by country.
-![Animation of US data by state from covidtracking](figures/ecdc_countries_eda1_zoom.gif)
-Each point represents a country, the circle sizes are by the estimated
-population in 2018, and the colors are by the total number of reported
-deaths (from white to dark red). Notice we are using log-scales and
-total positives scale begins from 10. Data taken from the [European
+Here is the number of cases and deaths per countries as by 29-05-2020.
+![](figures/ecdc_countries_eda.png)
+Only the top 50 countries (in number of cases were plotted). The scatter
+plot on the right represents the state for the most current date. Data
+taken from the [European
 CDC](https://opendata.ecdc.europa.eu/covid19/casedistribution/csv). Scripts:
 [update_alldata.sh](data/update_alldata.sh),
 [countries_eda.py](src/countries_eda.py).
@@ -60,7 +59,8 @@ population data. Data taken from
 * "COVID-19 Economic Stimulus Index" [paper](http://web.boun.edu.tr/elgin/COVID_19.pdf), [website](http://web.boun.edu.tr/elgin/COVID.htm), [data](COVID-19 Economic Stimulus Index)
 * Oxford is tracking goverment responses and the number of covid cases. [oxford-covid-19-government-response-tracker](https://www.bsg.ox.ac.uk/research/research-projects/oxford-covid-19-government-response-tracker)
 * Data from The Economist on tracking the actual v/s expected number of deaths [github/TheEconomist/excess-deaths](https://github.com/TheEconomist/covid-19-excess-deaths-tracker)
-
+* Similar kind of data from the NY Times [github/nytimes/excess-deaths](https://github.com/nytimes/covid-19-data/tree/master/excess-deaths)
+* Short-term Mortality Fluctuations (STMF) dataset by The Human Mortality Database [data](https://www.mortality.org/Public/STMF/Outputs/stmf.csv) [notes](https://www.mortality.org/Public/STMF_DOC/STMFNote.pdf) [website](https://www.mortality.org/)
 
 ## Interesting analysis and commentaries on Covid19
 * Genomic epidemiology of covid19 [nextstrain/ncov](https://nextstrain.org/ncov)
@@ -69,6 +69,7 @@ population data. Data taken from
 * List of Collaborative projects on Covid19 data [Call-for-action](https://docs.google.com/document/d/1JWeD1AaIGKMPry_EN8GjIqwX4J4KLQIAqP09exZ-ENI/edit?mkt_tok=eyJpIjoiT0RRd1lqZzVaREF4WVdSbSIsInQiOiJWODlWM0k3dktTbXg0R1ZWbUxpZHlYSEdvalN4WjJcL0llZ0VoV29Veml4XC9PQldKMzN4eUVESzR0QUUzUGwydDhDaFZLKzFPRkR6ajBZNG8yVXRuN01uU0Nqemc4TVJUZERUZ1NQYkV5REs3ZjE2Zm5mZE9BTmtPWEVTd2xhM0RCIn0%3D#)
 * Collection of tableau graphics [tableau-data-resources](https://www.tableau.com/covid-19-coronavirus-data-resources)
 * Collection of different statistical analysis and visualizations [covid19dashboards](https://covid19dashboards.com/)
+* Graphics on "excess deaths" in about European countries [euromomo](https://www.euromomo.eu/graphs-and-maps)
 * The paper that changed the mind of the UK goverment on how to handle the virus. Historically relevant
   [Imperial-College-COVID19-NPI-modelling](https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-College-COVID19-NPI-modelling-16-03-2020.pdf)
 * Working paper on "Misinformation During a Pandemic" [bfi.uchicago.edu/Misinformation-paper](https://bfi.uchicago.edu/working-paper/2020-44/)
