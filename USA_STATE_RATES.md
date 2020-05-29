@@ -14,7 +14,7 @@ the variables related to Covid-19.
 
 Overall procedure:
 * Download data with [update_alldata.sh](data/update_alldata.sh)
-* Make general animations with [usa_states_eda.py](src/usa_states_eda.py)
+* Make general plots with [usa_states_eda.py](src/usa_states_eda.py)
 * Estimate rates with Gaussian process regression [usa_states_rates.py](src/usa_states_rates.py)
 * Generate plots with the estimated rates [usa_states_rates_plot.py](src/usa_states_rates_plot.py)
 
@@ -68,19 +68,7 @@ optimization. I am unsure at the moment how best to handle these cases.
 
 ### Relative rates: positives/tests & deaths/positives
 
-Animation:
-<details>
-	<summary><b>Click to see the animation</b></summary>
-	<p>
-
-![Animation. Infering time rates from US covidtracking data.](figures/covidtracking_states_rates2.gif)
-Each point represents a state, and the colors are by the total number of
-reported deaths (from white to dark red). For plotting NaN values were
-set to 0 just for visualization. 
-
-</p></details>
-
-For more details we plot the trajectory of the variables and the
+We plot the trajectory of the variables and the
 estimated growth-rates. States are clustered within similar total
 population range.
 
@@ -117,21 +105,9 @@ population range.
 
 ### Growth-rates with respect to time 
 
-Animation:
-<details>
-	<summary><b>Click to see the animation</b></summary>
-	<p>
-
-![Animation. Infering time rates from US covidtracking data.](figures/covidtracking_states_rates.gif)
-Each point represents a state, and the colors are by the total number of
-reported deaths (from white to dark red). For plotting NaN values were
-set to 0 just for visualization. 
-
-</p></details>
-
-For more details we plot the trajectory of the variables and the
-estimated growth-rates. States are clustered within similar total
-population range.
+We plot the trajectory of the variables and the estimated
+growth-rates. States are clustered within similar total population
+range.
 
 **California, Texas, Florida, New York, & Pennsylvania**
 ![Set 0. Infering time rates from US covidtracking data.](figures/covidtracking_states_rates_byset_0.png)
