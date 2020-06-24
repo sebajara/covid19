@@ -18,7 +18,7 @@ socio-economic metrics.
 
 ## Countries
 
-Here are the top countries in number of cases and deaths as 24-JUN-2020.
+Here are the top countries in number of cases and deaths as of 24-JUN-2020.
 <img src="figures/eda_ecdc_countries_total_cases.png" width="400">
 <img src="figures/eda_ecdc_countries_total_deaths.png" width="400">
 <img src="figures/eda_ecdc_countries_scatter_total_cases_vs_deaths.png" width="800">
@@ -28,6 +28,14 @@ Country flags taken from [HatScripts](https://github.com/HatScripts/circle-flags
 Scripts: [update_alldata.sh](data/update_alldata.sh), [countries_eda.py](src/countries_eda.py).
 
 ## USA by state
+
+Here are the top states within USA in number of cases, testing, and deaths as of 24-JUN-2020.
+<img src="figures/eda_covidtracking_states_total_tests.png" width="400">
+<img src="figures/eda_covidtracking_states_total_cases.png" width="400">
+<img src="figures/eda_covidtracking_states_total_deaths.png" width="400">
+Data taken from [covidtracking](https://covidtracking.com/).
+Stateflags taken from [coryetzkorn](https://github.com/coryetzkorn/state-svg-defs). 
+Scripts: [update_alldata.sh](data/update_alldata.sh), [usa_states_eda.py](src/usa_states_eda.py).
 
 ## Data sources on Covid19
 * Covid19 data by country compiled by the European Centre for Disease Prevention and Control [ecdc-covid-19-cases-worldwide](https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases)

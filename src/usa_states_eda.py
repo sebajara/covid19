@@ -1,5 +1,9 @@
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import os
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 from localutils.dataload import covidtracking_ustates
 from localutils.plotutils import getcolormapandnorm
 from localutils.plotutils import get_point_sizes
@@ -7,6 +11,7 @@ from localutils.plotutils import local_axes_formatting
 from localutils.plotutils import addtexts2axes
 from localutils.plotutils import figsaveandclose
 from localutils.plotutils import figs2gif
+from localutils.plotutils import get_list_colors
 
 # NOTE: would be nice instead of using scatter circles, use the shape of each state instead
 # https://github.com/coryetzkorn/state-svg-defs
@@ -17,97 +22,135 @@ from localutils.plotutils import figs2gif
 
 # ===== Get covidtracking data for the us states
 (states_df, states_info) = covidtracking_ustates()
-max_test = states_df['positive'].max()+states_df['negative'].max()
+states_df['total_test'] = states_df['positive']+states_df['negative']
+max_test = states_df['total_test'].max()
 max_death = states_df['death'].max()
 max_pop = states_info['POPESTIMATE2019'].max()
 dates = np.sort(states_df['date'].unique())
+min_date = dates.min()
+max_date = dates.max()
+states = states_df['state'].unique()
 
 # ===== Some descriptive plots and annimations
-# NOTE: overall the implementation is a bit inefficient, but works for now.
-# Define color bins based on death counts
-(cmap, norm) = getcolormapandnorm(1, max_death, log=True, cmapstr='YlOrRd', N=100)
 
+topn = 20
+maxx = np.max(states_df['date'].unique()-min_date)/np.timedelta64(1, 'D')
+colors = get_list_colors('rainbow', len(states))
 
-def make_eda_fig1(date, positives_low_min=1):
-    # get the data pertaining the date
-    sdf = states_df[states_df['date'] == date].fillna(0)
-    sdf = sdf.merge(states_info.loc[:, ['abbreviation', 'POPESTIMATE2019']], right_on='abbreviation', left_on='state', how='left')
-    # named variables
-    labels = sdf['abbreviation']
-    deaths = sdf['death']
-    total_test = (sdf['positive']+sdf['negative'])
-    positives = (sdf['positive'])
-    population = (sdf['POPESTIMATE2019'])    
-    sizes = get_point_sizes(population.copy(), max_pop)
-    # acutal plotting
-    fig, axes = plt.subplots(ncols=3, nrows=1, figsize=(14, 5))
-    # population v/s positives
-    axes[0].scatter(population, positives, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[0], "Population", "Total Positives", xlim2=1e08, ylim2=1.5*max_test, xlim1=5e05, ylim1=positives_low_min)
-    # total_test v/s positives
-    axes[1].scatter(total_test, positives, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[1], "Total tests", "Total Positives", xlim2=1.5*max_test, ylim2=1.5*max_test, xlim1=positives_low_min, ylim1=positives_low_min)
-    axes[1].set_title(np.datetime_as_string(date, unit='D'), fontsize=20)  # put the date as title
-    # deaths v/s positives
-    axes[2].scatter(deaths, positives, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[2], "Total Deaths", "Total Positives", xlim2=1.5*max_death, ylim2=1.5*max_test, ylim1=positives_low_min)
-    plt.tight_layout()
-    # Add the labels for the top states. Note: it is better to add
-    # labels after plt.tight_layout()
-    addtexts2axes(axes[0], population, positives, labels, (5e05, 1e08), (positives_low_min, 1.5*max_test), qtile=0.9)
-    addtexts2axes(axes[1], total_test, positives, labels, (positives_low_min, 1.5*max_test), (positives_low_min, 1.5*max_test), qtile=0.9)
-    addtexts2axes(axes[2], deaths, positives, labels, (1, 1.5*max_death), (positives_low_min, 1.5*max_test), qtile=0.9)
-    return fig
+maxy = 1e07
+miny = 10
+hlstates = states_df.groupby('state')['positive'].max().sort_values(ascending=True).index[-topn:].values
+legendys = np.logspace(np.log10(miny), np.log10(maxy), len(hlstates)+2)
+fig, axes = plt.subplots(ncols=1, nrows=1, figsize=(11, 10))
+for (i, state) in enumerate(states):
+    sdf = states_df[states_df['state'] == state].sort_values('date', ascending=True)
+    days = pd.Series((sdf['date'] - min_date).values/np.timedelta64(1, 'D'))
+    yval = sdf['positive']
+    if(state in hlstates):
+        color = colors[i]
+        ind = np.where(hlstates == state)[0][0]
+        axes.text(1.1*maxx, legendys[ind+1], str(topn-ind)+'. '+state,
+                  horizontalalignment='left', verticalalignment='center', fontsize=14)
+        plt.arrow(maxx, yval.iloc[-1],
+                  0.04*maxx, legendys[ind+1]-yval.iloc[-1],
+                  clip_on=False, shape='right', color=color)
+        path = 'state-svg-defs/SVG/'+ state +'.png'
+        zoom = 0.3
+        #path = 'flags/svg/us/' + state.lower() + '.png'
+        #zoom = 0.1
+        if(not os.path.isfile(path)):
+            print(path)
+        img = mpimg.imread(path)
+        im = OffsetImage(img, zoom=zoom)
+        ab = AnnotationBbox(im, (1.06*maxx, legendys[ind+1]), xycoords='data',
+                            frameon=False, annotation_clip=False)
+        axes.add_artist(ab)
+    else:
+        color = (0.8, 0.8, 0.8, 0.3)
+    sizes = 2
+    axes.plot(days, yval, 'o-', c=color, markersize=sizes, markeredgecolor=color)
+local_axes_formatting(axes, "Days since 2020-MAR-06", "Total Positive Cases", xlim1=30, xlim2=maxx, ylim1=miny, ylim2=maxy, logx=False, fs=20)
+axes.set_title('Top 20 states in total positive cases', fontsize=24)
+plt.xticks(fontsize=16)
+plt.yticks(fontsize=16)
+plt.tight_layout()
+figsaveandclose(fig, output="../figures/eda_covidtracking_states_total_cases.png")
 
+maxy = 1.5*max_death
+miny = 1
+hlstates = states_df.groupby('state')['death'].max().sort_values(ascending=True).index[-topn:].values
+legendys = np.logspace(np.log10(miny), np.log10(maxy), len(hlstates)+2)
+fig, axes = plt.subplots(ncols=1, nrows=1, figsize=(11, 10))
+for (i, state) in enumerate(states):
+    sdf = states_df[states_df['state'] == state].sort_values('date', ascending=True)
+    days = pd.Series((sdf['date'] - min_date).values/np.timedelta64(1, 'D'))
+    yval = sdf['death']
+    if(state in hlstates):
+        color = colors[i]
+        ind = np.where(hlstates == state)[0][0]
+        axes.text(1.1*maxx, legendys[ind+1], str(topn-ind)+'. '+state,
+                  horizontalalignment='left', verticalalignment='center', fontsize=14)
+        plt.arrow(maxx, yval.iloc[-1],
+                  0.04*maxx, legendys[ind+1]-yval.iloc[-1],
+                  clip_on=False, shape='right', color=color)
+        path = 'state-svg-defs/SVG/'+ state +'.png'
+        zoom = 0.3
+        #path = 'flags/svg/us/' + state.lower() + '.png'
+        #zoom = 0.1
+        if(not os.path.isfile(path)):
+            print(path)
+        img = mpimg.imread(path)
+        im = OffsetImage(img, zoom=zoom)
+        ab = AnnotationBbox(im, (1.06*maxx, legendys[ind+1]), xycoords='data',
+                            frameon=False, annotation_clip=False)
+        axes.add_artist(ab)
+    else:
+        color = (0.8, 0.8, 0.8, 0.3)
+    sizes = 2
+    axes.plot(days, yval, 'o-', c=color, markersize=sizes, markeredgecolor=color)
+local_axes_formatting(axes, "Days since 2020-MAR-06", "Total reported deaths", xlim1=30, xlim2=maxx, ylim1=miny, ylim2=maxy, logx=False, fs=20)
+axes.set_title('Top 20 states in total reported deaths', fontsize=24)
+plt.xticks(fontsize=16)
+plt.yticks(fontsize=16)
+plt.tight_layout()
+figsaveandclose(fig, output="../figures/eda_covidtracking_states_total_deaths.png")
 
-def make_eda_fig2(date, positives_low_min=1):
-    # get the data pertaining the date
-    sdf = states_df[states_df['date'] == date].fillna(0)
-    sdf = sdf.merge(states_info.loc[:, ['abbreviation', 'POPESTIMATE2019']], right_on='abbreviation', left_on='state', how='left')
-    # named variables
-    labels = sdf['abbreviation']
-    population = (sdf['POPESTIMATE2019'])
-    positives = (sdf['positive'])
-    deaths = sdf['death']
-    tests = (sdf['positive']+sdf['negative'])
-    positives_ratio = 100*sdf['positive']/(sdf['positive']+sdf['negative'])
-    death_ratio = 100*sdf['death']/sdf['positive']
-    sizes = get_point_sizes(population.copy(), max_pop)
-    # acutal plotting
-    fig, axes = plt.subplots(ncols=3, nrows=1, figsize=(14, 5))
-    # population v/s positives
-    axes[0].scatter(population, positives, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[0], "Population", "Total Positives",
-                          xlim2=1e08, ylim2=1.5*max_test, xlim1=5e05, ylim1=positives_low_min)
-    # total_test v/s positives
-    axes[1].scatter(tests, positives_ratio, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[1], "Total Tests", "Positives / Tests [%]",
-                          xlim2=1.5*max_test, ylim2=100, xlim1=positives_low_min, ylim1=0, logy=False)
-    axes[1].set_title(np.datetime_as_string(date, unit='D'), fontsize=20)  # put the date as title
-    # deaths v/s positives
-    axes[2].scatter(positives, death_ratio, c=deaths, cmap=cmap, norm=norm, edgecolors='k', alpha=0.75, s=sizes)
-    local_axes_formatting(axes[2], "Total Positives", "Deaths / Positives [%]",
-                          xlim2=1.5*max_test, ylim2=8, xlim1=positives_low_min, ylim1=0, logy=False)
-    plt.tight_layout()
-    # Add the labels for the top states. Note: it is better to add
-    # labels after plt.tight_layout()
-    addtexts2axes(axes[0], population, positives, labels, (5e05, 1e08), (positives_low_min, 1.5*max_test), qtile=0.85)
-    addtexts2axes(axes[1], tests, positives_ratio, labels, (positives_low_min, 1.5*max_test), (0, 100), qtile=0.85)
-    addtexts2axes(axes[2], positives, death_ratio, labels, (positives_low_min, 1.5*max_test), (0, 8), qtile=0.85)
-    return fig
+maxy = 1e07
+miny = 10
+hlstates = states_df.groupby('state')['positive'].max().sort_values(ascending=True).index[-topn:].values
+legendys = np.logspace(np.log10(miny), np.log10(maxy), len(hlstates)+2)
+fig, axes = plt.subplots(ncols=1, nrows=1, figsize=(11, 10))
+for (i, state) in enumerate(states):
+    sdf = states_df[states_df['state'] == state].sort_values('date', ascending=True)
+    days = pd.Series((sdf['date'] - min_date).values/np.timedelta64(1, 'D'))
+    yval = sdf['total_test']
+    if(state in hlstates):
+        color = colors[i]
+        ind = np.where(hlstates == state)[0][0]
+        axes.text(1.1*maxx, legendys[ind+1], str(topn-ind)+'. '+state,
+                  horizontalalignment='left', verticalalignment='center', fontsize=14)
+        plt.arrow(maxx, yval.iloc[-1],
+                  0.04*maxx, legendys[ind+1]-yval.iloc[-1],
+                  clip_on=False, shape='right', color=color)
+        path = 'state-svg-defs/SVG/'+ state +'.png'
+        zoom = 0.3
+        #path = 'flags/svg/us/' + state.lower() + '.png'
+        #zoom = 0.1
+        if(not os.path.isfile(path)):
+            print(path)
+        img = mpimg.imread(path)
+        im = OffsetImage(img, zoom=zoom)
+        ab = AnnotationBbox(im, (1.06*maxx, legendys[ind+1]), xycoords='data',
+                            frameon=False, annotation_clip=False)
+        axes.add_artist(ab)
+    else:
+        color = (0.8, 0.8, 0.8, 0.3)
+    sizes = 2
+    axes.plot(days, yval, 'o-', c=color, markersize=sizes, markeredgecolor=color)
+local_axes_formatting(axes, "Days since 2020-MAR-06", "Total tests", xlim1=30, xlim2=maxx, ylim1=miny, ylim2=maxy, logx=False, fs=20)
+axes.set_title('Top 20 states in testing', fontsize=24)
+plt.xticks(fontsize=16)
+plt.yticks(fontsize=16)
+plt.tight_layout()
+figsaveandclose(fig, output="../figures/eda_covidtracking_states_total_tests.png")
 
-
-#fig = make_eda_fig2(dates[-1])
-#plt.show()
-
-# save figures for the last date individually
-figsaveandclose(fig=make_eda_fig1(dates[-1]), output="../figures/covidtracking_states_eda1_latest.png")
-figsaveandclose(fig=make_eda_fig1(dates[-1], positives_low_min=100), output="../figures/covidtracking_states_eda1_latest_zoom.png")
-figsaveandclose(fig=make_eda_fig2(dates[-1], positives_low_min=100), output="../figures/covidtracking_states_eda2_latest_zoom.png")
-
-# Make an animation with the plots for each date.
-# NOTE: I tried doing gif via matplotlib, but got tired. Doing regular
-# convert instead, it requires saving individual figures into a temp/ folder.
-#figs2gif(dates, make_eda_fig1, '../figures/covidtracking_states_eda1.gif', 60)
-figs2gif(dates, make_eda_fig1, '../figures/covidtracking_states_eda1_zoom.gif', 60, positives_low_min=100)
-#figs2gif(dates, make_eda_fig2, '../figures/covidtracking_states_eda2_zoom.gif', 60, positives_low_min=100)
