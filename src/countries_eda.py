@@ -7,6 +7,7 @@ from localutils.plotutils import figsaveandclose
 from localutils.plotutils import get_list_colors
 import matplotlib.image as mpimg
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+from scipy import stats
 
 world_df = pd.read_csv('../data/ecdc/ecdc_data.csv')
 world_df['dateRep'] = pd.to_datetime(world_df['dateRep'], format="%d/%m/%Y")
@@ -128,4 +129,50 @@ plt.yticks(fontsize=16)
 plt.tight_layout()
 figsaveandclose(fig, output="../figures/eda_ecdc_countries_total_deaths.png")
 
-
+# x = total cases, y = deaths
+maxx = 1e07
+minx = 10
+maxy = 1e06
+miny = 1
+xvals = []
+yvals = []
+ids = []
+for (i, country) in enumerate(countries):
+    sdf = world_df[world_df['countriesAndTerritories'] == country].sort_values('dateRep', ascending=True)
+    id = countries2id.loc[country, 'geoId']
+    if(isinstance(id, str)):
+        xvals.append(sdf['total_cases'].iloc[-1])
+        yvals.append(sdf['total_deaths'].iloc[-1])
+        ids.append(id.lower())
+xvals = np.array(xvals)
+yvals = np.array(yvals)
+slope, intercept, r_value, p_value, std_err = stats.linregress(np.log(xvals[yvals>0]), np.log(yvals[yvals>0]))
+#label = 'Deaths = '+str(round(slope, 2))+'*Cases + '+str(int(round(intercept,0)))+' (R='+str(round(r_value,2))+')'
+fig, axes = plt.subplots(ncols=1, nrows=1, figsize=(10.5, 10))
+#vec = np.linspace(minx, maxx, 10)
+#axes.plot(vec, np.exp(slope*np.log(vec)+intercept), ':', color=(0.3,0.3,0.3,0.5), linewidth=2, label=label)
+for i in range(0, len(ids)):
+    x = xvals[i]
+    y = yvals[i]
+    if((x > minx) and (y > miny)):
+        id = ids[i]
+        if(id == 'uk'):
+            id = 'gb'
+        flagpath = 'circle-flags/flags/'+ id +'.png'
+        if(os.path.isfile(flagpath)):
+            axes.plot(x, y, 'o', markersize=16, markeredgecolor='black', markerfacecolor=(1,1,1,0))
+            flagimg = mpimg.imread(flagpath)
+            zoom = 0.025
+            im = OffsetImage(flagimg, zoom=zoom)
+            ab = AnnotationBbox(im, (x, y), xycoords='data',
+                                frameon=False, annotation_clip=False)
+            axes.add_artist(ab)
+        else:
+            print('Warning: flag '+flagpath+' not found')
+local_axes_formatting(axes, "Total Positive Cases", "Total Reported Deaths", xlim1=minx, xlim2=maxx, ylim1=miny, ylim2=maxy, fs=20)
+axes.set_title('Countries total cases v/s total deaths', fontsize=24)
+#axes.legend()
+plt.xticks(fontsize=16)
+plt.yticks(fontsize=16)
+plt.tight_layout()
+figsaveandclose(fig, output="../figures/eda_ecdc_countries_scatter_total_cases_vs_deaths.png")

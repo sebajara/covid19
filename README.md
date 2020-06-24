@@ -21,10 +21,11 @@ socio-economic metrics.
 Here are the top countries in number of cases and deaths as 24-JUN-2020.
 <img src="figures/eda_ecdc_countries_total_cases.png" width="400">
 <img src="figures/eda_ecdc_countries_total_deaths.png" width="400">
+<img src="figures/eda_ecdc_countries_scatter_total_cases_vs_deaths.png" width="800">
 
-Data taken from the [European CDC](https://opendata.ecdc.europa.eu/covid19/casedistribution/csv). Scripts:
-[update_alldata.sh](data/update_alldata.sh),
-[countries_eda.py](src/countries_eda.py).
+Data taken from the [European CDC](https://opendata.ecdc.europa.eu/covid19/casedistribution/csv). 
+Country flags taken from [HatScripts](https://github.com/HatScripts/circle-flags). 
+Scripts: [update_alldata.sh](data/update_alldata.sh), [countries_eda.py](src/countries_eda.py).
 
 ## USA by state
 
