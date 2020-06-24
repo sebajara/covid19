@@ -1,12 +1,12 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from localutils.plotutils import getcolormapandnorm
-from localutils.plotutils import get_point_sizes
+import os
 from localutils.plotutils import local_axes_formatting
-from localutils.plotutils import addtexts2axes
 from localutils.plotutils import figsaveandclose
 from localutils.plotutils import get_list_colors
+import matplotlib.image as mpimg
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
 world_df = pd.read_csv('../data/ecdc/ecdc_data.csv')
 world_df['dateRep'] = pd.to_datetime(world_df['dateRep'], format="%d/%m/%Y")
@@ -21,55 +21,111 @@ for name in names:
     ind = sdf.index
     csum_cases = np.cumsum(sdf['cases'])
     csum_deaths = np.cumsum(sdf['deaths'])
-    per_per_cap = 100*csum_cases/sdf['popData2018'].iloc[0]
-    per_per_cap2 = 100*csum_deaths/sdf['popData2018'].iloc[0]
+    per_per_cap = 100*csum_cases/sdf['popData2019'].iloc[0]
+    per_per_cap2 = 100*csum_deaths/sdf['popData2019'].iloc[0]
     world_df.loc[ind, 'total_cases'] = csum_cases
     world_df.loc[ind, 'total_deaths'] = csum_deaths
     world_df.loc[ind, 'cases_per_cap'] = per_per_cap
     world_df.loc[ind, 'deaths_per_cap'] = per_per_cap2
 
 max_death = world_df['total_deaths'].max()
-max_pop = world_df['popData2018'].max()
+max_pop = world_df['popData2019'].max()
 max_cases = world_df['total_cases'].max()
 dates = np.sort(world_df['dateRep'].unique())
 min_date = dates.min()
 max_date = dates.max()
-countries = world_df[world_df['total_cases']>1e04]['countriesAndTerritories'].unique()
 
-# (cmap, norm) = getcolormapandnorm(1, max_death, log=True, cmapstr='YlOrRd', N=100)
+#countries = world_df[world_df['total_cases']>1e04]['countriesAndTerritories'].unique()
 
-fig, axes = plt.subplots(ncols=3, nrows=2, figsize=(11.5, 6.5))
+countries = world_df['countriesAndTerritories'].unique()
 colors = get_list_colors('rainbow', len(countries))
+
+countries2id = pd.DataFrame(world_df.groupby('countriesAndTerritories')['geoId'].max())
+countries2abr = pd.DataFrame(world_df.groupby('countriesAndTerritories')['countryterritoryCode'].max())
+
+topn = 20
+maxx = np.max(world_df['dateRep'].unique()-min_date)/np.timedelta64(1, 'D')
+
+maxy = 1e07
+miny = 100
+hlcountries = world_df.groupby('countriesAndTerritories')['total_cases'].max().sort_values(ascending=True).index[-topn:].values
+legendys = np.logspace(np.log10(miny), np.log10(maxy), len(hlcountries)+2)
+fig, axes = plt.subplots(ncols=1, nrows=1, figsize=(11, 10))
 for (i, country) in enumerate(countries):
-    sizes = 1
-    edgecolor = (0.4, 0.4, 0.4)
-    color = colors[i]
     sdf = world_df[world_df['countriesAndTerritories'] == country].sort_values('dateRep', ascending=True)
     days = pd.Series((sdf['dateRep'] - min_date).values/np.timedelta64(1, 'D'))
-    axes[0, 0].plot(days, sdf['total_cases'], 'o:', c=color, alpha=0.5, markersize=sizes, markeredgecolor=color)
-    local_axes_formatting(axes[0, 0], "Days since 2020", "Total Positives", xlim2=150, ylim2=1e07, xlim1=1, ylim1=10, logx=False, fs=12)
-    axes[0, 1].plot(days, sdf['total_deaths'], 'o:', c=color, alpha=0.5, markersize=sizes, markeredgecolor=color)
-    local_axes_formatting(axes[0, 1], "Days since 2020", "Total Deaths", xlim2=150, ylim2=2e05, xlim1=1, ylim1=10, logx=False, fs=12)
-    axes[1, 0].plot(days, sdf['cases_per_cap'], 'o:', c=color, alpha=0.5, markersize=sizes, markeredgecolor=color)
-    local_axes_formatting(axes[1, 0], "Days since 2020", "Positives/Population [%]", xlim2=150, ylim2=5, xlim1=1, ylim1=0.001, logx=False, fs=12)
-    axes[1, 1].plot(days, sdf['deaths_per_cap'], 'o:', c=color, alpha=0.5, markersize=sizes, markeredgecolor=color)
-    local_axes_formatting(axes[1, 1], "Days since 2020", "Deaths/Population [%]", xlim2=150, ylim2=0.3, xlim1=1, ylim1=0.00001, logx=False, fs=12)
-    size = 200*sdf['popData2018'].iloc[0]/max_pop
-    axes[0, 2].scatter(sdf['total_cases'].iloc[-1], sdf['total_deaths'].iloc[-1], color=color, edgecolors='k', alpha=0.75, s=size)
-    if(sdf['total_deaths'].iloc[-1] > 2e04):
-        f1 = np.random.choice([0.7, 1.2])
-        f2 = np.random.choice([0.7, 1.2])
-        axes[0, 2].text(f1*sdf['total_cases'].iloc[-1], f1*sdf['total_deaths'].iloc[-1],
-                        sdf['countryterritoryCode'].iloc[-1], horizontalalignment='left',
-                        verticalalignment='bottom', color='k', fontsize=10)
-    local_axes_formatting(axes[0, 2], "Total Positives", "Total deaths", xlim2=1e07, xlim1=1e04, ylim2=2e05, ylim1=100, fs=12)
-    axes[1, 2].scatter(sdf['cases_per_cap'].iloc[-1], sdf['deaths_per_cap'].iloc[-1], color=color, edgecolors='k', alpha=0.75, s=size)
-    local_axes_formatting(axes[1, 2], "Positives/Population", "Deaths/Population", xlim2=5, xlim1=0.001, ylim2=0.3, ylim1=0.0001, fs=12)
-    if(sdf['deaths_per_cap'].iloc[-1] > 0.05):
-        f1 = np.random.choice([0.7, 1.2])
-        f2 = np.random.choice([0.7, 1.2])
-        axes[1, 2].text(f1*sdf['cases_per_cap'].iloc[-1], f1*sdf['deaths_per_cap'].iloc[-1],
-                        sdf['countryterritoryCode'].iloc[-1], horizontalalignment='left',
-                        verticalalignment='bottom', color='k', fontsize=10)
-    plt.tight_layout()
-figsaveandclose(fig, output="../figures/ecdc_countries_eda.png")
+    yval = sdf['total_cases']
+    if(country in hlcountries):
+        color = colors[i]
+        abr = countries2abr.loc[country, 'countryterritoryCode']
+        ind = np.where(hlcountries == country)[0][0]
+        axes.text(1.1*maxx, legendys[ind+1], str(topn-ind)+'. '+abr,
+                  horizontalalignment='left', verticalalignment='center', fontsize=14)
+        plt.arrow(maxx, sdf['total_cases'].iloc[-1],
+                  0.04*maxx, legendys[ind+1]-sdf['total_cases'].iloc[-1],
+                  clip_on=False, shape='right', color=color)
+        geoid = countries2id.loc[country, 'geoId'].lower()
+        if(geoid == 'uk'):
+            geoid = 'gb'
+        flagpath = 'circle-flags/flags/'+ geoid +'.png'
+        if(not os.path.isfile(flagpath)):
+            print(flagpath)
+        flagimg = mpimg.imread(flagpath)
+        zoom = 0.05
+        im = OffsetImage(flagimg, zoom=zoom)
+        ab = AnnotationBbox(im, (1.06*maxx, legendys[ind+1]), xycoords='data',
+                            frameon=False, annotation_clip=False)
+        axes.add_artist(ab)
+    else:
+        color = (0.8, 0.8, 0.8, 0.3)
+    sizes = 2
+    axes.plot(days, sdf['total_cases'], 'o-', c=color, markersize=sizes, markeredgecolor=color)
+local_axes_formatting(axes, "Days since 2020", "Total Positive Cases", xlim1=50, xlim2=maxx, ylim1=miny, ylim2=maxy, logx=False, fs=20)
+axes.set_title('Top 20 countries in total positive cases', fontsize=24)
+plt.xticks(fontsize=16)
+plt.yticks(fontsize=16)
+plt.tight_layout()
+figsaveandclose(fig, output="../figures/eda_ecdc_countries_total_cases.png")
+
+hlcountries = world_df.groupby('countriesAndTerritories')['total_deaths'].max().sort_values(ascending=True).index[-topn:].values
+maxy = 1e06
+miny = 10
+legendys = np.logspace(np.log10(miny), np.log10(maxy), len(hlcountries)+2)
+fig, axes = plt.subplots(ncols=1, nrows=1, figsize=(11, 10))
+for (i, country) in enumerate(countries):
+    sdf = world_df[world_df['countriesAndTerritories'] == country].sort_values('dateRep', ascending=True)
+    days = pd.Series((sdf['dateRep'] - min_date).values/np.timedelta64(1, 'D'))
+    yval = sdf['total_deaths']
+    if(country in hlcountries):
+        color = colors[i]
+        abr = countries2abr.loc[country, 'countryterritoryCode']
+        ind = np.where(hlcountries == country)[0][0]
+        axes.text(1.1*maxx, legendys[ind+1], str(topn-ind)+'. '+abr,
+                  horizontalalignment='left', verticalalignment='center', fontsize=14)
+        plt.arrow(maxx, yval.iloc[-1],
+                  0.04*maxx, legendys[ind+1]-yval.iloc[-1],
+                  clip_on=False, shape='right', color=color)
+        geoid = countries2id.loc[country, 'geoId'].lower()
+        if(geoid == 'uk'):
+            geoid = 'gb'
+        flagpath = 'circle-flags/flags/'+ geoid +'.png'
+        if(not os.path.isfile(flagpath)):
+            print(flagpath)
+        flagimg = mpimg.imread(flagpath)
+        zoom = 0.05
+        im = OffsetImage(flagimg, zoom=zoom)
+        ab = AnnotationBbox(im, (1.06*maxx, legendys[ind+1]), xycoords='data',
+                            frameon=False, annotation_clip=False)
+        axes.add_artist(ab)
+    else:
+        color = (0.8, 0.8, 0.8, 0.3)
+    sizes = 2
+    axes.plot(days, yval, 'o-', c=color, markersize=sizes, markeredgecolor=color)
+local_axes_formatting(axes, "Days since 2020", "Total Reported Deaths", xlim1=50, xlim2=maxx, ylim1=miny, ylim2=maxy, logx=False, fs=20)
+axes.set_title('Top 20 countries in total reported deaths', fontsize=24)
+plt.xticks(fontsize=16)
+plt.yticks(fontsize=16)
+plt.tight_layout()
+figsaveandclose(fig, output="../figures/eda_ecdc_countries_total_deaths.png")
+
+

@@ -3,7 +3,7 @@
 This is a collection of resources, visualizations, and analysis
 regarding the Covid-19 pandemic. For now it includes some graphical
 representations, and an example on how to use Gaussian Process to infer
-the rates (US only for now).
+the time rates (in making).
 
 My goal is to eventually correlate the dynamics of individual countries
 and US' states with their respective responses, as well as some
@@ -18,30 +18,14 @@ socio-economic metrics.
 
 ## Countries
 
-Here is the number of cases and deaths per countries as by 29-05-2020.
-![](figures/ecdc_countries_eda.png)
-Only the top 50 countries (in number of cases were plotted). The scatter
-plot on the right represents the state for the most current date. Data
-taken from the [European
-CDC](https://opendata.ecdc.europa.eu/covid19/casedistribution/csv). Scripts:
+Here are the top countries in number of cases and deaths as 24-JUN-2020.
+![](figures/eda_ecdc_countries_total_cases.png)
+![](figures/eda_ecdc_countries_total_deaths.png)
+Data taken from the [European CDC](https://opendata.ecdc.europa.eu/covid19/casedistribution/csv). Scripts:
 [update_alldata.sh](data/update_alldata.sh),
 [countries_eda.py](src/countries_eda.py).
 
 ## USA by state
-
-In the document [USA_STATE_RATES.md](USA_STATE_RATES.md) I describe the
-(ongoing) resuls related to inferring rates using Gaussian Process.
-
-Here is an animation showing the evolution of covid19 in the USA (by state).
-![Animation of US data by state from covidtracking](figures/covidtracking_states_eda1_zoom.gif)
-Each point represents a state, the circle sizes are by the [estimated
-population in
-2019](https://www2.census.gov/programs-surveys/popest/datasets/2010-2019/state/detail/),
-and the colors are by the total number of reported deaths (from white to
-dark red). Notice we are using log-scales and total positives scale
-begins from 100. A few states were not included because I lacked the
-population data. Data taken from
-[covidtracking](https://covidtracking.com/).
 
 ## Data sources on Covid19
 * Covid19 data by country compiled by the European Centre for Disease Prevention and Control [ecdc-covid-19-cases-worldwide](https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases)
@@ -65,6 +49,7 @@ population data. Data taken from
 ## Interesting analysis and commentaries on Covid19
 * Genomic epidemiology of covid19 [nextstrain/ncov](https://nextstrain.org/ncov)
 * Analysis by OurWorldInData. Good charts and discussions. [ourworldindata/coronavirus](https://ourworldindata.org/coronavirus)
+* Performance evaluation of models submited to Forecast Hub [covid19-forecast-hub-evaluation](https://github.com/youyanggu/covid19-forecast-hub-evaluation)
 * Preliminary assessment of CDC data reporting by May 18th (US) [covidtracking-CDC-report](https://covidtracking.com/documents/CDC%20Data%20Report%20%20-%20The%20COVID%20Tracking%20Project.pdf) 
 * List of Collaborative projects on Covid19 data [Call-for-action](https://docs.google.com/document/d/1JWeD1AaIGKMPry_EN8GjIqwX4J4KLQIAqP09exZ-ENI/edit?mkt_tok=eyJpIjoiT0RRd1lqZzVaREF4WVdSbSIsInQiOiJWODlWM0k3dktTbXg0R1ZWbUxpZHlYSEdvalN4WjJcL0llZ0VoV29Veml4XC9PQldKMzN4eUVESzR0QUUzUGwydDhDaFZLKzFPRkR6ajBZNG8yVXRuN01uU0Nqemc4TVJUZERUZ1NQYkV5REs3ZjE2Zm5mZE9BTmtPWEVTd2xhM0RCIn0%3D#)
 * Collection of tableau graphics [tableau-data-resources](https://www.tableau.com/covid-19-coronavirus-data-resources)
@@ -80,15 +65,3 @@ population data. Data taken from
 * Medium article with an interesting preliminary analysis from concerned people [medium/tomaspueyo/the-hammer-and-the-dance](https://medium.com/@tomaspueyo/coronavirus-the-hammer-and-the-dance-be9337092b56)
 * Interesting article about how changes in behavior during the pandemic have caused challenges to AI models. [technologyreview-AI-covid-change](https://www.technologyreview.com/2020/05/11/1001563/covid-pandemic-broken-ai-machine-learning-amazon-retail-fraud-humans-in-the-loop/)
 
-## More general resources on infection disease modelling
-* [Kissler2020](https://science.sciencemag.org/content/early/2020/04/14/science.abb5793)
-* Modeling of SEIRS epidemic dynamics with extensions, including
-  network-structured populations, testing, contact tracing, and social
-  distancing. [seirsplus](https://github.com/ryansmcgee/seirsplus)
-* Paper on how to incorporate behavioural change in forecasting
-  models. ["Systematic biases in disease forecasting – The role of
-  behavior change"](https: //www.sciencedirect.com/science/article/pii/S1755436518301063?via%3Dihub)
-* Paper on the Importance on accounting individual variability v/s average population
-  models. They describe how individual-specific control measures can
-  outperform population-wide measures. ["Superspreading and the effect
-  of individual variation on disease emergence"](https://www.nature.com/articles/nature04153)
