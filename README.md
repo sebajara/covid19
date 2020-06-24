@@ -19,8 +19,8 @@ socio-economic metrics.
 ## Countries
 
 Here are the top countries in number of cases and deaths as 24-JUN-2020.
-<img src="figures/eda_ecdc_countries_total_cases.png" width="500">
-<img src="figures/eda_ecdc_countries_total_deaths.png" width="500">
+<img src="figures/eda_ecdc_countries_total_cases.png" width="400">
+<img src="figures/eda_ecdc_countries_total_deaths.png" width="400">
 
 Data taken from the [European CDC](https://opendata.ecdc.europa.eu/covid19/casedistribution/csv). Scripts:
 [update_alldata.sh](data/update_alldata.sh),
