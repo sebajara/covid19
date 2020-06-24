@@ -172,6 +172,7 @@ for i in range(0, len(ids)):
 local_axes_formatting(axes, "Total Positive Cases", "Total Reported Deaths", xlim1=minx, xlim2=maxx, ylim1=miny, ylim2=maxy, fs=20)
 axes.set_title('Countries total cases v/s total deaths', fontsize=24)
 #axes.legend()
+axes.grid(True)
 plt.xticks(fontsize=16)
 plt.yticks(fontsize=16)
 plt.tight_layout()
