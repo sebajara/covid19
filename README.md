@@ -28,6 +28,25 @@ Data taken from the [European CDC](https://opendata.ecdc.europa.eu/covid19/cased
 
 ## USA by state
 
+## Data sources on Covid19
+* Covid19 data by country compiled by the European Centre for Disease Prevention and Control [ecdc-covid-19-cases-worldwide](https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases)
+* Testing data sources compiled by OurWorldInData [github/owid/covid-19-data](https://github.com/owid/covid-19-data/tree/master/public/data/testing)
+* Johns Hopkins CSSE repo [github/Johns-Hopkins/COVID-19](https://github.com/CSSEGISandData/COVID-19)
+* Covid19 data from the US by state. It includes number of tests. [covidtracking](https://covidtracking.com/)
+* Covid19 data from the US by state and county. Does not include number of tests. [github/nytimes/covid-19-data](https://github.com/nytimes/covid-19-data)
+* Covid19 data from the US by state by race. [covidtracking/race](https://covidtracking.com/race)
+* Covid19 data from the US on prisons. [github/themarshallproject/COVID_prison](https://github.com/themarshallproject/COVID_prison_data)
+* Covid data from France [github/opencovid19-fr](https://github.com/opencovid19-fr/data)
+* Hospital covid data from France [donnees-hospitalieres-relatives-a-lepidemie-de-covid-19](https://www.data.gouv.fr/fr/datasets/donnees-hospitalieres-relatives-a-lepidemie-de-covid-19/)
+* Covid19 data from Germany [github/covid-19-germany-gae](https://github.com/jgehrcke/covid-19-germany-gae)
+* Covid19 data from Spain [github/datadista/COVID 2019](https://github.com/datadista/datasets/tree/master/COVID%2019)
+* Covid19 data for Lating America [github/covid_latinoamerica](https://github.com/DataScienceResearchPeru/covid-19_latinoamerica)
+* "COVID-19 Economic Stimulus Index" [paper](http://web.boun.edu.tr/elgin/COVID_19.pdf), [website](http://web.boun.edu.tr/elgin/COVID.htm), [data](COVID-19 Economic Stimulus Index)
+* Oxford is tracking goverment responses and the number of covid cases. [oxford-covid-19-government-response-tracker](https://www.bsg.ox.ac.uk/research/research-projects/oxford-covid-19-government-response-tracker)
+* Data from The Economist on tracking the actual v/s expected number of deaths [github/TheEconomist/excess-deaths](https://github.com/TheEconomist/covid-19-excess-deaths-tracker)
+* Similar kind of data from the NY Times [github/nytimes/excess-deaths](https://github.com/nytimes/covid-19-data/tree/master/excess-deaths)
+* Short-term Mortality Fluctuations (STMF) dataset by The Human Mortality Database [data](https://www.mortality.org/Public/STMF/Outputs/stmf.csv) [notes](https://www.mortality.org/Public/STMF_DOC/STMFNote.pdf) [website](https://www.mortality.org/)
+
 ## Interesting analysis and commentaries on Covid19
 * Genomic epidemiology of covid19 [nextstrain/ncov](https://nextstrain.org/ncov)
 * Analysis by OurWorldInData. Good charts and discussions. [ourworldindata/coronavirus](https://ourworldindata.org/coronavirus)
