@@ -5,20 +5,9 @@ import matplotlib.image as mpimg
 import os
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 from localutils.dataload import covidtracking_ustates
-from localutils.plotutils import getcolormapandnorm
-from localutils.plotutils import get_point_sizes
 from localutils.plotutils import local_axes_formatting
-from localutils.plotutils import addtexts2axes
 from localutils.plotutils import figsaveandclose
-from localutils.plotutils import figs2gif
 from localutils.plotutils import get_list_colors
-
-# NOTE: would be nice instead of using scatter circles, use the shape of each state instead
-# https://github.com/coryetzkorn/state-svg-defs
-# We could also use countries flags
-# https://github.com/HatScripts/circle-flags?files=1
-
-#from importlib import reload
 
 # ===== Get covidtracking data for the us states
 (states_df, states_info) = covidtracking_ustates()
@@ -30,8 +19,6 @@ dates = np.sort(states_df['date'].unique())
 min_date = dates.min()
 max_date = dates.max()
 states = states_df['state'].unique()
-
-# ===== Some descriptive plots and annimations
 
 topn = 20
 maxx = np.max(states_df['date'].unique()-min_date)/np.timedelta64(1, 'D')
@@ -153,4 +140,58 @@ plt.xticks(fontsize=16)
 plt.yticks(fontsize=16)
 plt.tight_layout()
 figsaveandclose(fig, output="../figures/eda_covidtracking_states_total_tests.png")
+
+maxy = 100
+miny = 0
+window = 10
+tempdic = {}
+for (i, state) in enumerate(states):
+    sdf = states_df[states_df['state'] == state].sort_values('date', ascending=True)
+    days = pd.Series((sdf['date'] - min_date).values/np.timedelta64(1, 'D')).values
+    val1 = sdf['positive'].rolling(window=window).mean().values
+    val2 = sdf['total_test'].rolling(window=window).mean().values
+    ratio = val1[-1]/val2[-1]
+    if(ratio >= 0):
+        tempdic[state] = ratio
+hlstates = np.array([k for (k,v) in sorted(tempdic.items(), key=lambda item: item[1])][-topn:])
+legendys = np.linspace(miny, maxy, len(hlstates)+2)
+fig, axes = plt.subplots(ncols=1, nrows=1, figsize=(11, 10))
+for (i, state) in enumerate(states):
+    sdf = states_df[states_df['state'] == state].sort_values('date', ascending=True)
+    days = pd.Series((sdf['date'] - min_date).values/np.timedelta64(1, 'D')).values
+    val1 = sdf['positive'].rolling(window=window).mean().values
+    val2 = sdf['total_test'].rolling(window=window).mean().values
+    #val1 = smooth(sdf['positive'].values)
+    #val2 = smooth(sdf['total_test'].values)
+    yval = 100*val1/val2
+    sizes = 2
+    if(state in hlstates):
+        color = colors[i]
+        ind = np.where(hlstates == state)[0][0]
+        axes.text(1.1*maxx, legendys[ind+1], str(topn-ind)+'. '+state,
+                  horizontalalignment='left', verticalalignment='center', fontsize=14)
+        plt.arrow(maxx, yval[-1],
+                  0.04*maxx, legendys[ind+1]-yval[-1],
+                  clip_on=False, shape='right', color=color)
+        path = 'state-svg-defs/SVG/'+ state +'.png'
+        zoom = 0.3
+        #path = 'flags/svg/us/' + state.lower() + '.png'
+        #zoom = 0.1
+        if(os.path.isfile(path)):
+            img = mpimg.imread(path)
+            im = OffsetImage(img, zoom=zoom)
+            ab = AnnotationBbox(im, (1.06*maxx, legendys[ind+1]), xycoords='data',
+                                frameon=False, annotation_clip=False)
+            axes.add_artist(ab)
+        else:
+            print(path)
+    else:
+        color = (0.8, 0.8, 0.8, 0.3)
+    axes.plot(days[yval >= 0], yval[yval >= 0], 'o-', c=color, markersize=sizes, markeredgecolor=color)
+local_axes_formatting(axes, "Days since 2020-MAR-06", "Positives/Tests Fraction [%]", xlim1=30, xlim2=maxx, ylim1=miny, ylim2=maxy, logy=False, logx=False, fs=20)
+axes.set_title('Top 20 states in positives per testing', fontsize=24)
+plt.xticks(fontsize=16)
+plt.yticks(fontsize=16)
+plt.tight_layout()
+figsaveandclose(fig, output="../figures/eda_covidtracking_states_positive_totals_ratio.png")
 
