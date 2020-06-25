@@ -35,7 +35,7 @@ Here are the top states within USA in number of cases, testing, and deaths as of
 <img src="figures/eda_covidtracking_states_total_tests.png" width="400">
 <img src="figures/eda_covidtracking_states_positive_totals_ratio.png" width="400">
 Data taken from [covidtracking](https://covidtracking.com/).
-Stateflags taken from [coryetzkorn](https://github.com/coryetzkorn/state-svg-defs). 
+State's geographical shape icons taken from [coryetzkorn](https://github.com/coryetzkorn/state-svg-defs). 
 Scripts: [update_alldata.sh](data/update_alldata.sh), [usa_states_eda.py](src/usa_states_eda.py).
 
 ## Data sources on Covid19
