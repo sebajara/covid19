@@ -100,7 +100,7 @@ plt.tight_layout()
 figsaveandclose(fig, output="../figures/eda_ecdc_countries_total_cases.png")
 
 maxy = 1e05
-miny = 100
+miny = 10
 hlcountries = world_df.sort_values('dateRep', ascending=True).groupby('countriesAndTerritories')['cases_rolling'].last().sort_values(ascending=True).index[-topn:].values
 legendys = np.logspace(np.log10(miny), np.log10(maxy), len(hlcountries)+2)
 fig, axes = plt.subplots(ncols=1, nrows=1, figsize=(11, 10))
@@ -234,7 +234,7 @@ for (i, country) in enumerate(countries):
     sizes = 2
     axes.plot(deltadays, yval, 'o-', c=color, markersize=sizes, markeredgecolor=color)
 local_axes_formatting(axes, "Days since reaching 10 deaths", "Deaths per day (7 days rolling average)", xlim1=0, xlim2=maxx, ylim1=miny, ylim2=maxy, logx=False, fs=20)
-axes.set_title('Top 20 countries in new reported deaths per day', fontsize=24)
+axes.set_title('Top 20 countries in reported deaths per day', fontsize=24)
 plt.xticks(fontsize=16)
 plt.yticks(fontsize=16)
 plt.tight_layout()
