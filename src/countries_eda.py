@@ -50,7 +50,8 @@ countries2id = pd.DataFrame(world_df.groupby('countriesAndTerritories')['geoId']
 countries2abr = pd.DataFrame(world_df.groupby('countriesAndTerritories')['countryterritoryCode'].max())
 
 topn = 20
-maxx = np.max(world_df['dateRep'].unique()-min_date)/np.timedelta64(1, 'D')
+#maxx = np.max(world_df['dateRep'].unique()-min_date)/np.timedelta64(1, 'D')
+maxx = 150
 
 maxy = 1e07
 miny = 100
