@@ -20,6 +20,7 @@ min_date = dates.min()
 max_date = dates.max()
 states = states_df['state'].unique()
 
+window = 7
 topn = 20
 maxx = np.max(states_df['date'].unique()-min_date)/np.timedelta64(1, 'D')
 colors = get_list_colors('rainbow', len(states))
@@ -143,7 +144,6 @@ figsaveandclose(fig, output="../figures/eda_covidtracking_states_total_tests.png
 
 maxy = 100
 miny = 0
-window = 10
 tempdic = {}
 for (i, state) in enumerate(states):
     sdf = states_df[states_df['state'] == state].sort_values('date', ascending=True)

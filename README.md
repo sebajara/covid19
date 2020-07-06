@@ -20,7 +20,9 @@ socio-economic metrics.
 
 Here are the top countries in number of cases and deaths as of 24-JUN-2020.
 <img src="figures/eda_ecdc_countries_total_cases.png" width="400">
+<img src="figures/eda_ecdc_countries_new_cases.png" width="400">
 <img src="figures/eda_ecdc_countries_total_deaths.png" width="400">
+<img src="figures/eda_ecdc_countries_new_deaths.png" width="400">
 <img src="figures/eda_ecdc_countries_scatter_total_cases_vs_deaths.png" width="800">
 
 Data taken from the [European CDC](https://opendata.ecdc.europa.eu/covid19/casedistribution/csv). 
@@ -65,6 +67,7 @@ Scripts: [update_alldata.sh](data/update_alldata.sh), [usa_states_eda.py](src/us
 * List of Collaborative projects on Covid19 data [Call-for-action](https://docs.google.com/document/d/1JWeD1AaIGKMPry_EN8GjIqwX4J4KLQIAqP09exZ-ENI/edit?mkt_tok=eyJpIjoiT0RRd1lqZzVaREF4WVdSbSIsInQiOiJWODlWM0k3dktTbXg0R1ZWbUxpZHlYSEdvalN4WjJcL0llZ0VoV29Veml4XC9PQldKMzN4eUVESzR0QUUzUGwydDhDaFZLKzFPRkR6ajBZNG8yVXRuN01uU0Nqemc4TVJUZERUZ1NQYkV5REs3ZjE2Zm5mZE9BTmtPWEVTd2xhM0RCIn0%3D#)
 * Collection of tableau graphics [tableau-data-resources](https://www.tableau.com/covid-19-coronavirus-data-resources)
 * Collection of different statistical analysis and visualizations [covid19dashboards](https://covid19dashboards.com/)
+* Paper "How Did COVID-19 and Stabilization Policies Aﬀect Spending and Employment? A New Real-Time Economic Tracker Based on Private Sector Data" [github/EconomicTracker](https://github.com/Opportunitylab/EconomicTracker)
 * Graphics on "excess deaths" in about European countries [euromomo](https://www.euromomo.eu/graphs-and-maps)
 * The paper that changed the mind of the UK goverment on how to handle the virus. Historically relevant
   [Imperial-College-COVID19-NPI-modelling](https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-College-COVID19-NPI-modelling-16-03-2020.pdf)
