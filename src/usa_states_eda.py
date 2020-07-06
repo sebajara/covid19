@@ -22,26 +22,32 @@ states = states_df['state'].unique()
 
 window = 7
 topn = 20
-maxx = np.max(states_df['date'].unique()-min_date)/np.timedelta64(1, 'D')
+#maxx = np.max(states_df['date'].unique()-min_date)/np.timedelta64(1, 'D')
+maxx = 140
 colors = get_list_colors('rainbow', len(states))
 
-maxy = 1e07
-miny = 10
+maxy = 1e06
+miny = 100
 hlstates = states_df.groupby('state')['positive'].max().sort_values(ascending=True).index[-topn:].values
 legendys = np.logspace(np.log10(miny), np.log10(maxy), len(hlstates)+2)
 fig, axes = plt.subplots(ncols=1, nrows=1, figsize=(11, 10))
 for (i, state) in enumerate(states):
     sdf = states_df[states_df['state'] == state].sort_values('date', ascending=True)
     days = pd.Series((sdf['date'] - min_date).values/np.timedelta64(1, 'D'))
-    yval = sdf['positive']
+    if((sdf['positive'] > 100).sum() > 0):
+        zeroday = (sdf[sdf['positive'] > 100]['date'].iloc[0]-min_date)/np.timedelta64(1, 'D')
+    else:
+        zeroday = days.max()
+    deltadays = days-zeroday
+    yval = sdf['positive']    
     if(state in hlstates):
         color = colors[i]
         ind = np.where(hlstates == state)[0][0]
         axes.text(1.1*maxx, legendys[ind+1], str(topn-ind)+'. '+state,
                   horizontalalignment='left', verticalalignment='center', fontsize=14)
-        plt.arrow(maxx, yval.iloc[-1],
-                  0.04*maxx, legendys[ind+1]-yval.iloc[-1],
-                  clip_on=False, shape='right', color=color)
+        plt.arrow(deltadays.max(), yval.iloc[-1],
+                  1.04*maxx-deltadays.max(), legendys[ind+1]-yval.iloc[-1],
+                  clip_on=False, shape='right', ls=':', color=color, alpha=0.75)
         path = 'state-svg-defs/SVG/'+ state +'.png'
         zoom = 0.3
         #path = 'flags/svg/us/' + state.lower() + '.png'
@@ -54,10 +60,10 @@ for (i, state) in enumerate(states):
                             frameon=False, annotation_clip=False)
         axes.add_artist(ab)
     else:
-        color = (0.8, 0.8, 0.8, 0.3)
+        color = (0.8, 0.8, 0.8, 0.5)
     sizes = 2
-    axes.plot(days, yval, 'o-', c=color, markersize=sizes, markeredgecolor=color)
-local_axes_formatting(axes, "Days since 2020-MAR-06", "Total Positive Cases", xlim1=30, xlim2=maxx, ylim1=miny, ylim2=maxy, logx=False, fs=20)
+    axes.plot(deltadays, yval, 'o-', c=color, markersize=sizes, markeredgecolor=color)
+local_axes_formatting(axes, "Days since reacing 100 cases", "Total Positive Cases", xlim1=0, xlim2=maxx, ylim1=miny, ylim2=maxy, logx=False, fs=20)
 axes.set_title('Top 20 states in total positive cases', fontsize=24)
 plt.xticks(fontsize=16)
 plt.yticks(fontsize=16)
@@ -72,15 +78,20 @@ fig, axes = plt.subplots(ncols=1, nrows=1, figsize=(11, 10))
 for (i, state) in enumerate(states):
     sdf = states_df[states_df['state'] == state].sort_values('date', ascending=True)
     days = pd.Series((sdf['date'] - min_date).values/np.timedelta64(1, 'D'))
+    if((sdf['positive'] > 100).sum() > 0):
+        zeroday = (sdf[sdf['positive'] > 100]['date'].iloc[0]-min_date)/np.timedelta64(1, 'D')
+    else:
+        zeroday = days.max()
+    deltadays = days-zeroday
     yval = sdf['death']
     if(state in hlstates):
         color = colors[i]
         ind = np.where(hlstates == state)[0][0]
         axes.text(1.1*maxx, legendys[ind+1], str(topn-ind)+'. '+state,
                   horizontalalignment='left', verticalalignment='center', fontsize=14)
-        plt.arrow(maxx, yval.iloc[-1],
-                  0.04*maxx, legendys[ind+1]-yval.iloc[-1],
-                  clip_on=False, shape='right', color=color)
+        plt.arrow(deltadays.max(), yval.iloc[-1],
+                  1.04*maxx-deltadays.max(), legendys[ind+1]-yval.iloc[-1],
+                  clip_on=False, shape='right', ls=':', color=color, alpha=0.75)
         path = 'state-svg-defs/SVG/'+ state +'.png'
         zoom = 0.3
         #path = 'flags/svg/us/' + state.lower() + '.png'
@@ -93,10 +104,10 @@ for (i, state) in enumerate(states):
                             frameon=False, annotation_clip=False)
         axes.add_artist(ab)
     else:
-        color = (0.8, 0.8, 0.8, 0.3)
+        color = (0.8, 0.8, 0.8, 0.5)
     sizes = 2
-    axes.plot(days, yval, 'o-', c=color, markersize=sizes, markeredgecolor=color)
-local_axes_formatting(axes, "Days since 2020-MAR-06", "Total reported deaths", xlim1=30, xlim2=maxx, ylim1=miny, ylim2=maxy, logx=False, fs=20)
+    axes.plot(deltadays, yval, 'o-', c=color, markersize=sizes, markeredgecolor=color)
+local_axes_formatting(axes, "Days since reaching 100 cases", "Total reported deaths", xlim1=0, xlim2=maxx, ylim1=miny, ylim2=maxy, logx=False, fs=20)
 axes.set_title('Top 20 states in total reported deaths', fontsize=24)
 plt.xticks(fontsize=16)
 plt.yticks(fontsize=16)
@@ -104,22 +115,27 @@ plt.tight_layout()
 figsaveandclose(fig, output="../figures/eda_covidtracking_states_total_deaths.png")
 
 maxy = 1e07
-miny = 10
-hlstates = states_df.groupby('state')['positive'].max().sort_values(ascending=True).index[-topn:].values
+miny = 100
+hlstates = states_df.groupby('state')['total_test'].max().sort_values(ascending=True).index[-topn:].values
 legendys = np.logspace(np.log10(miny), np.log10(maxy), len(hlstates)+2)
 fig, axes = plt.subplots(ncols=1, nrows=1, figsize=(11, 10))
 for (i, state) in enumerate(states):
     sdf = states_df[states_df['state'] == state].sort_values('date', ascending=True)
     days = pd.Series((sdf['date'] - min_date).values/np.timedelta64(1, 'D'))
+    if((sdf['positive'] > 100).sum() > 0):
+        zeroday = (sdf[sdf['positive'] > 100]['date'].iloc[0]-min_date)/np.timedelta64(1, 'D')
+    else:
+        zeroday = days.max()
+    deltadays = days-zeroday
     yval = sdf['total_test']
     if(state in hlstates):
         color = colors[i]
         ind = np.where(hlstates == state)[0][0]
         axes.text(1.1*maxx, legendys[ind+1], str(topn-ind)+'. '+state,
                   horizontalalignment='left', verticalalignment='center', fontsize=14)
-        plt.arrow(maxx, yval.iloc[-1],
-                  0.04*maxx, legendys[ind+1]-yval.iloc[-1],
-                  clip_on=False, shape='right', color=color)
+        plt.arrow(deltadays.max(), yval.iloc[-1],
+                  1.04*maxx-deltadays.max(), legendys[ind+1]-yval.iloc[-1],
+                  clip_on=False, shape='right', ls=':', color=color, alpha=0.75)
         path = 'state-svg-defs/SVG/'+ state +'.png'
         zoom = 0.3
         #path = 'flags/svg/us/' + state.lower() + '.png'
@@ -132,10 +148,10 @@ for (i, state) in enumerate(states):
                             frameon=False, annotation_clip=False)
         axes.add_artist(ab)
     else:
-        color = (0.8, 0.8, 0.8, 0.3)
+        color = (0.8, 0.8, 0.8, 0.5)
     sizes = 2
-    axes.plot(days, yval, 'o-', c=color, markersize=sizes, markeredgecolor=color)
-local_axes_formatting(axes, "Days since 2020-MAR-06", "Total tests", xlim1=30, xlim2=maxx, ylim1=miny, ylim2=maxy, logx=False, fs=20)
+    axes.plot(deltadays, yval, 'o-', c=color, markersize=sizes, markeredgecolor=color)
+local_axes_formatting(axes, "Days since reaching 100 cases", "Total tests", xlim1=0, xlim2=maxx, ylim1=miny, ylim2=maxy, logx=False, fs=20)
 axes.set_title('Top 20 states in testing', fontsize=24)
 plt.xticks(fontsize=16)
 plt.yticks(fontsize=16)
@@ -143,7 +159,7 @@ plt.tight_layout()
 figsaveandclose(fig, output="../figures/eda_covidtracking_states_total_tests.png")
 
 maxy = 100
-miny = 0
+miny = 1
 tempdic = {}
 for (i, state) in enumerate(states):
     sdf = states_df[states_df['state'] == state].sort_values('date', ascending=True)
@@ -154,11 +170,17 @@ for (i, state) in enumerate(states):
     if(ratio >= 0):
         tempdic[state] = ratio
 hlstates = np.array([k for (k,v) in sorted(tempdic.items(), key=lambda item: item[1])][-topn:])
-legendys = np.linspace(miny, maxy, len(hlstates)+2)
+legendys = np.logspace(np.log10(miny), np.log10(maxy), len(hlstates)+2)
+#legendys = np.linspace(miny, maxy, len(hlstates)+2)
 fig, axes = plt.subplots(ncols=1, nrows=1, figsize=(11, 10))
 for (i, state) in enumerate(states):
     sdf = states_df[states_df['state'] == state].sort_values('date', ascending=True)
     days = pd.Series((sdf['date'] - min_date).values/np.timedelta64(1, 'D')).values
+    if((sdf['positive'] > 100).sum() > 0):
+        zeroday = (sdf[sdf['positive'] > 100]['date'].iloc[0]-min_date)/np.timedelta64(1, 'D')
+    else:
+        zeroday = days.max()
+    deltadays = days-zeroday
     val1 = sdf['positive'].rolling(window=window).mean().values
     val2 = sdf['total_test'].rolling(window=window).mean().values
     #val1 = smooth(sdf['positive'].values)
@@ -170,9 +192,9 @@ for (i, state) in enumerate(states):
         ind = np.where(hlstates == state)[0][0]
         axes.text(1.1*maxx, legendys[ind+1], str(topn-ind)+'. '+state,
                   horizontalalignment='left', verticalalignment='center', fontsize=14)
-        plt.arrow(maxx, yval[-1],
-                  0.04*maxx, legendys[ind+1]-yval[-1],
-                  clip_on=False, shape='right', color=color)
+        plt.arrow(deltadays.max(), yval[-1],
+                  1.04*maxx-deltadays.max(), legendys[ind+1]-yval[-1],
+                  clip_on=False, shape='right', ls=':', color=color, alpha=0.75)
         path = 'state-svg-defs/SVG/'+ state +'.png'
         zoom = 0.3
         #path = 'flags/svg/us/' + state.lower() + '.png'
@@ -186,9 +208,9 @@ for (i, state) in enumerate(states):
         else:
             print(path)
     else:
-        color = (0.8, 0.8, 0.8, 0.3)
-    axes.plot(days[yval >= 0], yval[yval >= 0], 'o-', c=color, markersize=sizes, markeredgecolor=color)
-local_axes_formatting(axes, "Days since 2020-MAR-06", "Positives/Tests Fraction [%]", xlim1=30, xlim2=maxx, ylim1=miny, ylim2=maxy, logy=False, logx=False, fs=20)
+        color = (0.8, 0.8, 0.8, 0.5)
+    axes.plot(deltadays[yval >= 0], yval[yval >= 0], 'o-', c=color, markersize=sizes, markeredgecolor=color)
+local_axes_formatting(axes, "Days since reaching 100 cases", "Positives/Tests Fraction [%]", xlim1=0, xlim2=maxx, ylim1=miny, ylim2=maxy, logx=False, fs=20)
 axes.set_title('Top 20 states in positives per testing', fontsize=24)
 plt.xticks(fontsize=16)
 plt.yticks(fontsize=16)
