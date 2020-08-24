@@ -58,9 +58,18 @@ Scripts: [update_alldata.sh](data/update_alldata.sh), [usa_states_eda.py](src/us
 * Data from The Economist on tracking the actual v/s expected number of deaths [github/TheEconomist/excess-deaths](https://github.com/TheEconomist/covid-19-excess-deaths-tracker)
 * Similar kind of data from the NY Times [github/nytimes/excess-deaths](https://github.com/nytimes/covid-19-data/tree/master/excess-deaths)
 * Short-term Mortality Fluctuations (STMF) dataset by The Human Mortality Database [data](https://www.mortality.org/Public/STMF/Outputs/stmf.csv) [notes](https://www.mortality.org/Public/STMF_DOC/STMFNote.pdf) [website](https://www.mortality.org/)
+* Mobility changes in Italy after lock down [paper](https://www.nature.com/articles/s41597-020-00575-2)
+* Global humanitarian and development aids [disasterprotection.org](https://www.disasterprotection.org/funding-covid-19-response)
+* Covid vaccine tracker [database](https://airtable.com/shrSAi6t5WFwqo3GM/tblEzPQS5fnc0FHYR/viweyymxOAtNvo7yH?blocks=bipZFzhJ7wHPv7x9z) [web app](https://www.covid-19vaccinetracker.org/) 
+* Global behaviour dataset using interviews in 29 countries [YouGov](https://github.com/YouGov-Data/covid-19-tracker)
+* CDC Covid case surveillance public data [public-data](https://data.cdc.gov/Case-Surveillance/COVID-19-Case-Surveillance-Public-Use-Data/vbim-akqf)
+* Covid policies by country over time [github.com/hikmahealth](https://github.com/hikmahealth/covid19countymap/tree/gh-pages)
 
 ## Interesting analysis and commentaries on Covid19
+* Using models to estimate the true number of infected people [ourworldindata.org/covid-models](https://ourworldindata.org/covid-models)
+
 * Genomic epidemiology of covid19 [nextstrain/ncov](https://nextstrain.org/ncov)
+* PCR primer design problems [tomeraltman.net](https://tomeraltman.net/2020/03/03/technical-problems-COVID-primers.html)
 * Analysis by OurWorldInData. Good charts and discussions. [ourworldindata/coronavirus](https://ourworldindata.org/coronavirus)
 * Performance evaluation of models submited to Forecast Hub [covid19-forecast-hub-evaluation](https://github.com/youyanggu/covid19-forecast-hub-evaluation)
 * Preliminary assessment of CDC data reporting by May 18th (US) [covidtracking-CDC-report](https://covidtracking.com/documents/CDC%20Data%20Report%20%20-%20The%20COVID%20Tracking%20Project.pdf) 
